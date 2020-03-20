@@ -1,0 +1,111 @@
+.render-button {
+
+    display: inline-block;
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 90%;
+    left: 40%;
+}
+
+.mainsidemenu-parent {
+    position: absolute;
+    text-align: center;
+
+}
+.mainmenu {
+    opacity: 0;
+    display: inline-block;
+    background-color: #0C2659;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -250px;
+    width: 400px;
+    height: 500px;
+    text-align: center;
+    color: white;
+    border: #005F7E;
+    border-style: solid;
+    border-width: 0.5em;
+    box-shadow: 0px 0px 50px 1px #0C2659;
+    
+}
+
+.songList {
+    margin: 2em;
+    text-align: left;
+    transition: all .2s ease-in-out;
+    height: 80%;
+    overflow-y: scroll;
+    border: #00C0FD;
+    border-style: solid;
+}
+
+.songList:hover {
+    text-align: left;
+
+}
+
+.title {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.song-entry {
+    grid-column: auto;
+    transition: all .2s ease-in-out;
+    border: #00C0FD;
+    border-style: solid;
+    border-width: .1em;
+    height:25%;
+    overflow: hidden;
+}
+
+.song-entry:hover {
+    height: 40%;
+}
+
+.song-name {
+    transform: unset;
+}
+
+
+.song-desc {
+    margin: 0.2rem;
+    transform: unset;
+    font-size: 1rem;
+
+}
+
+.song-length {
+    position: relative;
+    margin: 0.2rem;
+    transform: unset;
+    font-size: 1rem;
+    font-weight: bold;
+    float: right;
+    bottom: 3em;
+    right:1em;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #005F7E; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #005F7E; 
+  }

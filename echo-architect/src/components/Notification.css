@@ -1,0 +1,71 @@
+.container {
+    margin: 1rem;
+    display: grid;
+    float:right;
+    width: 40%;
+}
+
+@keyframes example {
+from {background-color: darkgreen;}
+to {background-color: darkgrey;}
+}
+@keyframes notifications {
+from {top:-20px;}
+to {top: 20px;}
+}
+
+.sidemenu {
+    float: right;
+    text-align: center;
+    background-color: white;
+    line-height: 1.5rem;
+    animation-duration: 4s;
+    font-size:1rem;
+    margin: 1em;
+    width: 90%;
+    border-radius: 0.5rem;
+}
+
+.sidemenu-body { 
+background-color: rebeccapurple;
+margin: 1em;
+}
+
+  @keyframes mymove {
+    from {top: -200px;}
+    to {top: 0px;}
+  }
+
+/* This fires as soon as the element enters the DOM*/
+.list-transition-enter {
+  /*We give the list the initial dimension of the list button*/
+  top: 0;
+  width: 120px;
+  max-height: 40px;
+  color: transparent;
+  background-color: #070927;
+  }
+  /* This is where we can add the transition*/
+  .list-transition-enter-active {
+  top: 45px;
+  width: 90%;
+  max-height: 200px;
+  background-color: white;
+  transition: all 400ms;
+  }
+  /* This fires as soon as the this.state.showList is false */
+  .list-transition-exit {
+  top: 45px;
+  width: 90%;
+  max-height: 200px;
+  background-color: White;
+  }
+  /* fires as element leaves the DOM*/
+  .list-transition-exit-active {
+  top: 0;
+  width: 120px;
+  max-height: 40px;
+  color: transparent;
+  background-color: #070927;
+  transition: all 400ms;
+  }

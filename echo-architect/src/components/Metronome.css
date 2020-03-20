@@ -1,0 +1,57 @@
+.metronome-container {
+    position: absolute!important;
+    max-width: 375px;
+    float: right;
+}
+
+.bpm-timer {
+    position: absolute!important;
+    text-align: center;
+    max-width: 375px;
+    margin:2em;
+    padding: 30px;
+    background-color: rgb(20, 32, 66);
+    border: rgb(11, 47, 146);
+    border-style: solid;
+    border-width: 0.3rem;
+    color: white;
+}
+
+.metronome {
+    position: absolute;
+    margin:2em;
+    
+    top:65%;
+    left: 5%;
+    height:20vmin
+}
+
+.metronome-base {
+    position: relative;
+    height:20vmin;
+    z-index: 3;
+}
+
+.metronome-pendulum {
+    position: relative;
+    height:20vmin;
+    z-index: 4;
+    right: 50%;
+    transform: rotate(-45deg);
+    transform-origin: 0% 100%
+}
+
+.bpm-slider input {
+    max-width: 100%;
+    margin: 4em;
+}
+
+.metronome button {
+    background: #c94d46;
+    padding: 10px;
+    border: 1px solid #832420;
+    border-radius: 2px;
+    width: 100px;
+    color: #fff;
+    font-size: 18px;
+  }
