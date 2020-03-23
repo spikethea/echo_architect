@@ -6,6 +6,7 @@ import Notification from './components/Notification'
 import MainMenu from './components/MainMenu'
 import Logo from './components/Logo';
 import Sketchp5 from './components/Sketchp5';
+import BackgroundParticles from './components/BackgroundParticles';
 
 
 class App extends Component {// Condiitional Rendering
@@ -21,7 +22,7 @@ class App extends Component {// Condiitional Rendering
   isMenuDisplayed () {
         if (!this.state.menuDisplayed) {
            return (<div><Logo/><button className="render-button" onClick={() =>{this.setState({menuDisplayed:true})}}>Display Menu</button></div>)} 
-           else return <MainMenu/>
+           else return <MainMenu style={{zIndex:3}}/>
     } 
 
 
@@ -39,6 +40,7 @@ class App extends Component {// Condiitional Rendering
       <Notification style={{zIndex:2}}/>
       <Metronome style={{zIndex:1}}/>
       {this.isMenuDisplayed()}
+      <BackgroundParticles style={{zIndex:-2}} />
     </div>
     
 

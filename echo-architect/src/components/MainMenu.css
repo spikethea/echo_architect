@@ -2,7 +2,7 @@
 
     display: inline-block;
     background-color: #FFFFFF;
-    position: fixed;
+    position: absolute;
     top: 90%;
     left: 40%;
 }
@@ -16,7 +16,7 @@
     opacity: 0;
     display: inline-block;
     background-color: #0C2659;
-    position: fixed;
+    position: absolute;
     top: 40%;
     left: 50%;
     margin-top: -200px;
@@ -30,6 +30,15 @@
     border-width: 0.5em;
     box-shadow: 0px 0px 50px 1px #0C2659;
     
+}
+
+.number {
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    color:white;
+    font-size:8em;
+    margin: 0em;
 }
 
 .songList {

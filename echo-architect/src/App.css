@@ -16,6 +16,16 @@ body {
   z-index:-1
 }
 
+.particles {
+  opacity: 25%;
+  top: 0em;
+  z-index: -3;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin:0;
+  padding:0;
+}
 .App-logo {
   position: absolute;
   opacity: 0;

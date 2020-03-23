@@ -23,7 +23,7 @@ export default class Sketchp5 extends Component {
     p5.createCanvas(500, 500).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
   };
   draw = p5 => {
-    p5.background(0);
+    p5.background(0,0,0,0);
     this.xPos = p5.map(this.x,0,1024,0,500);
     this.yPos = p5.map(this.y,0,1024,0,500);
     p5.ellipse(this.xPos, this.yPos, 70, 70);

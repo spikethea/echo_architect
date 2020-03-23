@@ -65,7 +65,7 @@ class MainMenu extends Component {
     } else {
         clearInterval(this.countdownInterval);
         this.aboutTween = TweenMax.to(this.aboutSection, .8,{opacity:0, y: -100, ease: Power3.easeOut});
-        song.play();
+        //song.play();
         }
     }
 
@@ -118,8 +118,8 @@ class MainMenu extends Component {
                 </div>
         )
             
-            } else if(this.state.countdown) { return(<div>
-                <p ref={p => this.aboutSection = p} style={{  color:"white",fontSize:"8em", position:"absolute", top: "35%", left: "45%"}}>{this.state.count}</p>
+            } else if(this.state.countdown) { return(<div className="number">
+                <p  ref={p => this.aboutSection = p}>{this.state.count}</p>
             </div>)}
 
         
