@@ -25,7 +25,7 @@ function BackgroundParticles() {
                     "color": "#145ea8"
                   },
                   "polygon": { // if the shape is a polygon
-                    "nb_sides": 5
+                    "nb_sides": 6
                   },
                   "image": { // If the shape is an image
                     "src": "",

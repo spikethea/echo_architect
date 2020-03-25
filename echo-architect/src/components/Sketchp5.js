@@ -16,11 +16,37 @@ export default class Sketchp5 extends Component {
     this.xPos = 0;
     this.y = 50; // initial starting y point of our circle
     this.yPos = 0;
+
+    //echo
+
+let beat;
+let melody;
+let ambience;
+let beatOrg;
+let melodyOrg;
+let ambienceOrg;
+
+//let beat = document.getElementById("myBeat");
+//let melody = document.getElementById("myMelody");
+//let ambient = document.getElementById("myAmbient");
+let database;
+
+let gameState = 2; //0 = ready, 1 = create new, 2 = retrieve new code, 3 waiting for new code, 4 = playing current, 5 = playing target
+
+let original = [0, 0, 0, 0]; //[beat,melody,ambient,tempo]
+let current = [4, 4, 4, 4]; //what the user changes
   }
 
  
   setup = (p5, canvasParentRef) => {
     p5.createCanvas(500, 500).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
+    let fft = new p5.FFT();
+
+  p5.textSize(30);
+  let beat = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+p5.current[0]+".wav?v=1582204180625");
+  let melody = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+current[1]+".wav?v=1582204180625");
+  let ambience = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+current[1]+".wav?v=1582204180625");
+
   };
   draw = p5 => {
     p5.background(0,0,0,0);

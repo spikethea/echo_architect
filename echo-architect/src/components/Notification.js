@@ -16,7 +16,7 @@ class Notification extends Component {
     render() {
       return (<div> <button 
             className="show"
-            onClick={this.toggle}>Show Notification</button>
+            onClick={this.toggle}>Help & Tips</button>
         <div className="container">
          
         

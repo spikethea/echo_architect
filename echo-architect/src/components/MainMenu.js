@@ -91,31 +91,17 @@ class MainMenu extends Component {
                 <div ref={p => this.MyMenu = p} className="mainmenu">
                 <p className="title">Song List</p>
                     <div className="songList">
-
-                        <div onClick={this.buttonPress} className="song-entry">
-                            <h3 className="song-name">{song[0].name}</h3>
-                            <p className="song-length">{song[0].length}</p>
-                            <p className="song-desc">{song[0].desc}</p>
-                        </div>
-
-                        <div className="song-entry">
-                        <h3 className="song-name">{song[1].name}</h3>
-                            <p className="song-length">{song[1].length}</p>
-                            <p className="song-desc">{song[1].desc}</p>
-                        </div>
-
-                        <div className="song-entry">
-                            <h3 className="song-name">Lo-Fi Vibes</h3>
-                            <p></p>
-                        </div>
-
-                        <div className="song-entry">
-                            <h3 className="song-name">Alternative Tune</h3>
-                            <p></p>
-                        </div>
+                        {song.map(song => (<div onClick={this.buttonPress} className="song-entry">
+                            <h3 className="song-name">{song.name}</h3>
+                            <p className="song-length">{song.length}</p>
+                            <p className="song-desc">{song.desc}</p>
+                        </div>))
+                        }
+                        
+                    </div>
 
                     </div>
-                </div>
+        
         )
             
             } else if(this.state.countdown) { return(<div className="number">
