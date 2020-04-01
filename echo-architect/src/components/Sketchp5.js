@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Sketch from "react-p5";
+import p5sound from "p5";
+import "p5/lib/addons/p5.sound";
 import socketIOClient from 'socket.io-client';
- 
-export default class Sketchp5 extends Component {
 
+export default class Sketchp5 extends Component {
 
   constructor() {
     super();
@@ -17,41 +18,20 @@ export default class Sketchp5 extends Component {
     this.y = 50; // initial starting y point of our circle
     this.yPos = 0;
 
-    //echo
-
-let beat;
-let melody;
-let ambience;
-let beatOrg;
-let melodyOrg;
-let ambienceOrg;
-
-//let beat = document.getElementById("myBeat");
-//let melody = document.getElementById("myMelody");
-//let ambient = document.getElementById("myAmbient");
-let database;
-
-let gameState = 2; //0 = ready, 1 = create new, 2 = retrieve new code, 3 waiting for new code, 4 = playing current, 5 = playing target
-
-let original = [0, 0, 0, 0]; //[beat,melody,ambient,tempo]
-let current = [4, 4, 4, 4]; //what the user changes
   }
 
  
   setup = (p5, canvasParentRef) => {
     p5.createCanvas(500, 500).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
-    let fft = new p5.FFT();
-
-  p5.textSize(30);
-  let beat = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+p5.current[0]+".wav?v=1582204180625");
-  let melody = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+current[1]+".wav?v=1582204180625");
-  let ambience = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+current[1]+".wav?v=1582204180625");
-
-  };
+    p5.textSize(30);
+  }
+    
   draw = p5 => {
     p5.background(0,0,0,0);
     this.xPos = p5.map(this.x,0,1024,0,500);
     this.yPos = p5.map(this.y,0,1024,0,500);
+    this.x1 = p5.map(this.y,0,1024,0,50);
+    this.y1 = p5.map(this.y,0,1024,0,50);
     p5.ellipse(this.xPos, this.yPos, 70, 70);
     // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
   };
@@ -89,6 +69,8 @@ let current = [4, 4, 4, 4]; //what the user changes
       console.log("connected!");
       this.x = value[0];
       this.y = value[1];
+      this.x1 = value[3];
+      this.y2 = value[4];
     }
   }
   

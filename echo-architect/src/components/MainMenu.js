@@ -40,6 +40,18 @@ class MainMenu extends Component {
                 desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
                 key:3,
             },
+            {
+                name:"Alternative Vibes",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:3,
+            },
+            {
+                name:"Alternative Vibes",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:3,
+            },
             
         ]}
 
