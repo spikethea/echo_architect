@@ -6,8 +6,8 @@ import socketIOClient from 'socket.io-client';
 
 export default class Sketchp5 extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       endpoint: "http://127.0.0.1:8081", // this is telling our socket.io client to connect to our bridge.js node local server on port 8081
       oscPortIn: 7500, // this will configure our bridge.js node local server to receive OSC messages on port 7500
@@ -17,6 +17,7 @@ export default class Sketchp5 extends Component {
     this.xPos = 0;
     this.y = 50; // initial starting y point of our circle
     this.yPos = 0;
+    console.log(new p5sound.FFT());
 
   }
 
@@ -24,6 +25,7 @@ export default class Sketchp5 extends Component {
   setup = (p5, canvasParentRef) => {
     p5.createCanvas(500, 500).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
     p5.textSize(30);
+    //let fft = new p5sound.FFT();
   }
     
   draw = p5 => {
