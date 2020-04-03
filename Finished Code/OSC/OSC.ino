@@ -22,8 +22,6 @@ const int slide4 = A3;
 const int btn1 = 7;
 const int btn2 = 5;
 
-int btn1_val = 0;
-int btn2_val = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -36,6 +34,7 @@ void setup() {
   pinMode(slide4, INPUT);
 
   pinMode(btn1, INPUT);
+  pinMode(btn2, INPUT);
 }
 
 void loop() {
@@ -45,8 +44,8 @@ void loop() {
   int32_t slide3_val = analogRead(slide3);
   int32_t slide4_val = analogRead(slide4);
 
-  btn1_val = digitalRead(btn1);
-  btn2_val = digitalRead(btn2);
+  uint8_t btn1_val = digitalRead(btn1);
+  uint8_t btn2_val = digitalRead(btn2);
 /*  if (btn1_val == HIGH) {
     Serial.println("1 Pressed");
   } else Serial.println("No Signal");
@@ -60,6 +59,8 @@ void loop() {
     msg.add(slide2_val); // add reading from analogue pin 0
     msg.add(slide3_val); // add reading from analogue pin 0
     msg.add(slide4_val); // add reading from analogue pin 0
+    //msg.add(btn1_val);
+    //msg.add(btn2_val);
     Udp.beginPacket(outIp, outPort);
     msg.send(Udp); // send the bytes to the SLIP stream
     Udp.endPacket(); // mark the end of the OSC Packet

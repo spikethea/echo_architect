@@ -16,6 +16,7 @@ database.loadDatabase(); //load database
 
 
 app.post("/api", (request, response) => {
+	console.log(database;)
   const data = request.body; //get data from the main body of the request
   const timestamp = Date.now(); //set timestamp as current date/time
   data.timestamp = timestamp; //add timestamp to data
@@ -55,8 +56,8 @@ io.sockets.on('connection', function (socket) {
   	});
 	socket.on('disconnect', function(){
 		if (isConnected) {
-			oscServer.kill();
-			oscClient.kill();
+			oscServer.close();
+			oscClient.close();
 		}
   	});
 });
