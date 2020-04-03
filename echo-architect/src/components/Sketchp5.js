@@ -59,7 +59,7 @@ export default class Sketchp5 extends Component {
     // this.xSize = p5.map(this.x1,0,1024,0,500);
     // this.ySize = p5.map(this.y1,0,1024,0,500);
     // p5.ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
-    console.log(this.original);
+    // console.log(this.original);
     if (this.gameState === 2) {
       recieveDatabase(this.gameState, this.database, this.original, this.beat, this.melody, this.ambience);
     }
@@ -104,10 +104,10 @@ export default class Sketchp5 extends Component {
       try {
         gameState = 3;
         const response = await fetch("/api"); //await /api fetch connection
-        const data = await response.json(); //await the response in json form
-        console.log(data);
-        database = data;
-        let randomer = Math.floor(Math.random() * data.length);
+        database = await response.json(); //await the response in json form
+        console.log(database);
+        // database = data;
+        let randomer = Math.floor(Math.random() * database.length);
         original = database[randomer].current;
         
         beat.p5sound.rate(original[3]);
