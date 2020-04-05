@@ -103,7 +103,7 @@ export default class Sketchp5 extends Component {
     async function recieveDatabase(gameState, database, original, beat, melody, ambience) {
       try {
         gameState = 3;
-        const response = await fetch("/api"); //await /api fetch connection
+        const response = await fetch("/api/"); //await /api fetch connection
         database = await response.json(); //await the response in json form
         console.log(database);
         // database = data;
@@ -157,7 +157,7 @@ export default class Sketchp5 extends Component {
         },
         body: JSON.stringify(data) //turn data to json string for storing
       }; //settings for sending data
-      const response = await fetch("/api", options); //await a reponse from the api using options specified above.
+      const response = await fetch("/api/", options); //await a reponse from the api using options specified above.
       const json = await response.json(); //check it's sent and console.log the response.
       console.log(json);
     }
