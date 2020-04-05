@@ -53,11 +53,12 @@ export default class Sketchp5 extends Component {
   setup = (p5, canvasParentRef) => {
     p5.createCanvas(this.width, this.height).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
     p5.textSize(30);
-    this.beat.play();
-    this.melody.play();
-    this.ambience.play();
-    this.beatOrg.play();
-    this.ambience.play();
+    //this.beat.play();
+    //this.melody.play();
+    //this.ambience.play();
+    //this.beatOrg.play();
+    //this.melodyOrg.play();
+    //this.ambience.play();
     
   }
     
@@ -115,7 +116,7 @@ export default class Sketchp5 extends Component {
         const response = await fetch("/api/"); //await /api fetch connection
         database = await response.json(); //await the response in json form
         console.log(database);
-        // database = data;
+        //database = data;
         let randomer = Math.floor(Math.random() * database.length);
         original = database[randomer].current;
         

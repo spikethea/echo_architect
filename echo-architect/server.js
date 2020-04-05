@@ -14,7 +14,7 @@ app.use(express.json({ limit: "1mb" })); //set limits for data
 const database = new Datastore("database.db"); //database for storing my user logged data
 database.loadDatabase(); //load database
 
-console.log(app);
+
 app.post("/api/", (request, response) => {
   const data = request.body; //get data from the main body of the request
   const timestamp = Date.now(); //set timestamp as current date/time
