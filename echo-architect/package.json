@@ -22,7 +22,7 @@
     "react-scripts": "3.4.0",
     "react-transition-group": "^4.3.0",
     "socket.io": "^2.3.0",
-    "proxy": "http://localhost:8081"
+    "proxy": "http://localhost:8081/api"
   },
   "scripts": {
     "start": "react-scripts start",
