@@ -15,7 +15,13 @@ const database = new Datastore("database.db"); //database for storing my user lo
 database.loadDatabase(); //load database
 
 
-app.post("/api", (request, response) => {
+app.all("/api/", (request, response, next) => {
+	response.header("Access-Control-Allow-Origin", "*");
+	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next()
+});
+
+app.post("/api/", (request, response) => {
   const data = request.body; //get data from the main body of the request
   const timestamp = Date.now(); //set timestamp as current date/time
   data.timestamp = timestamp; //add timestamp to data
@@ -24,11 +30,11 @@ app.post("/api", (request, response) => {
   console.log("data"); //data to console
 }); //route post request
 
-app.get("/api", (request, response) => {
+app.get("/api/", (request, response) => {
   database.find({}, function(err, docs) {
-	console.log(response);
+	// console.log(response);
 	response.json(docs); //takes response from docs
-	console.log(docs);
+	// console.log(docs);
 	if (err) console.error(err);
   }); //find database
 }); //route get request

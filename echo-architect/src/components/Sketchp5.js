@@ -39,7 +39,9 @@ export default class Sketchp5 extends Component {
     this.beatOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.original[0]+".wav?v=1582204180625");
     this.melodyOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.original[1]+".wav?v=1582204180625");
     this.ambienceOrg = new p5sound.SoundFile ("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.original[2]+".wav?v=1582204180625")
-  }
+  
+    this.toggleAudio = this.toggleAudio.bind(this)
+}
 
   preload = p5 => {
     this.beat = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.current[1]+".wav?v=1582204180625");
@@ -113,17 +115,19 @@ export default class Sketchp5 extends Component {
     async function recieveDatabase(gameState, database, original, beat, melody, ambience) {
       try {
         gameState = 3;
-        const response = await fetch("/api"); //await /api fetch connection
+        const port = process.env.PORT || 8081;
+        const response = await fetch(`http://localhost:${port}/api/`); //await /api fetch connection
         database = await response.json(); //await the response in json form
         console.log(database);
         //database = data;
         let randomer = Math.floor(Math.random() * database.length);
         original = database[randomer].current;
         
-        beat.p5sound.rate(original[3]);
-        melody.p5sound.rate(original[3]);
-        ambience.p5sound.rate(original[3]);
+        beat.rate(original[3]);
+        melody.rate(original[3]);
+        ambience.rate(original[3]);
         gameState = 0;
+        console.log(gameState)
       } catch (err) {
         console.log(err); //console.log any errors recieved if failed to get database
         gameState = 2;
@@ -133,25 +137,25 @@ export default class Sketchp5 extends Component {
     function toggleAudio(gameState, beat, melody, ambience, current, original) {
       if (gameState == 0) {
         //initialise
-        beat.p5sound.loop();
-        melody.p5sound.loop();
-        ambience.p5sound.loop();
+        beat.loop();
+        melody.loop();
+        ambience.loop();
         // beat.setVolume = 0.1;
         // melody.setVolume = 0.1;
         // ambience.setVolume = 0.1;
-        beat.p5sound.rate(1+(p5.int(current[3])-4)/8);
-        melody.p5sound.rate(1+(p5.int(current[3])-4)/8);
-        ambience.p5sound.rate(1+(p5.int(current[3])-4)/8);
+        beat.rate(1+(p5.int(current[3])-4)/8);
+        melody.rate(1+(p5.int(current[3])-4)/8);
+        ambience.rate(1+(p5.int(current[3])-4)/8);
         //beat.currentTime = 0;
         //melody.currentTime = 0;
         gameState = 4;
         
       } else if (gameState == 4) {
-        beat.p5sound.stop();
-        melody.p5sound.stop();
-        ambience.p5sound.stop();
+        this.beat.stop();
+        this.melody.stop();
+        this.ambience.stop();
         gameState = 0;
-        
+        console.log("working")
         
         //run the check here to see if they match up, play animation of somesort??
         checking(original, current, gameState);
@@ -269,14 +273,22 @@ export default class Sketchp5 extends Component {
       this.y = value[1];
       this.x1 = value[2];
       this.y1 = value[3];
-      // console.log(this.x, this.y, this.x1, this.y1);
+      console.log(this.x, this.y, this.x1, this.y1);
       this.btn1 = value[4];
       this.btn2 = value[5];
     }
   }
   
   render() {
-    return <Sketch setup={this.setup} draw={this.draw} />;
+    return (<div>
+      <div>
+      {this.toggleAudio}
+        <button onClick={this.originalAudio}> Original Audio</button>
+        <button onClick={this.toggleAudio}>Play Snippet</button>
+      </div>
+      <Sketch setup={this.setup} draw={this.draw} />
+      </div>
+    );
   }
 
 }
