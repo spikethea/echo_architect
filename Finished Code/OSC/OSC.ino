@@ -9,7 +9,7 @@ EthernetUDP Udp;
 
 IPAddress ip(192,168,0,120); //must be unique! First three numbers must be the same as the destination machine (subnet)
 //destination IP
-IPAddress outIp(192,168,0,21); //check the destination machine //164,11,214,124
+IPAddress outIp(192,168,0,31); //check the destination machine //164,11,214,124
 const unsigned int outPort = 7500; //destination port
 byte mac[] = {  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED }; // you can find this written on the board of some Arduino Ethernets or shields
 

@@ -21,6 +21,8 @@ export default class Sketchp5 extends Component {
     this.y1 = 0;
     this.xSize = 0;
     this.ySize = 0;
+    this.btn1 = 0;
+    this.btn2 = 0;
     this.width = 500;
     this.height = 500;
     
@@ -39,9 +41,7 @@ export default class Sketchp5 extends Component {
     this.beatOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.original[0]+".wav?v=1582204180625");
     this.melodyOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.original[1]+".wav?v=1582204180625");
     this.ambienceOrg = new p5sound.SoundFile ("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.original[2]+".wav?v=1582204180625")
-  
-    this.toggleAudio = this.toggleAudio.bind(this)
-}
+  }
 
   preload = p5 => {
     this.beat = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.current[1]+".wav?v=1582204180625");
@@ -63,19 +63,168 @@ export default class Sketchp5 extends Component {
     //this.ambience.play();
     
   }
+
+  visualiserLoop(gameState, spectrum, width, height, p5) {
+    //console.log(p5);
+    //let spectrum = this.fft.analyze();
+    p5.noStroke();
+    p5.fill(255, 255, 0);
+    // console.log("game state: " + gameState);
+    if (gameState === 4) {
+      p5.fill(0, 255, 0);
+    }
+    if (gameState === 5) {
+      p5.fill(255, 0, 0);
+    }
+    for (let i = 0; i< spectrum.length; i++){
+      let x = p5.map(i, 0, spectrum.length, 0, width);
+      let h = -height + p5.map(spectrum[i], 0, 255, height, 0);
+      p5.rect(x, height, width / spectrum.length, h );
+    }
+  }
+
+  async recieveDatabase(gameState, database, original, beat, melody, ambience, p5) {
+    try {
+      // console.log("game state: " + gameState);
+      gameState = 3;
+      const port = process.env.PORT || 8081;
+      const response = await fetch(`http://localhost:${port}/api/`); //await /api fetch connection
+      database = await response.json(); //await the response in json form
+      //console.log(database);
+      //database = data;
+      let randomer = Math.floor(Math.random() * database.length);
+      original = database[randomer].current;
+      // console.log(original[3])
+      beat.rate(original[3]);
+      melody.rate(original[3]);
+      ambience.rate(original[3]);
+      gameState = 0;
+
+    } catch (err) {
+      console.log(err); //console.log any errors recieved if failed to get database
+      gameState = 2;
+    }
+  }
+
+  toggleAudio(gameState, beat, melody, ambience, current, original, p5) {
+    if (gameState === 0) {
+      //initialise
+      if (!beat.isPlaying() && !melody.isPlaying() && !ambience.isPlaying()) {
+        beat.loop();
+        melody.loop();
+        ambience.loop();
+      }
+      
+      // beat.setVolume = 0.1;
+      // melody.setVolume = 0.1;
+      // ambience.setVolume = 0.1;
+      beat.rate(1+(p5.int(current[3])-4)/8);
+      melody.rate(1+(p5.int(current[3])-4)/8);
+      ambience.rate(1+(p5.int(current[3])-4)/8);
+      //beat.currentTime = 0;
+      //melody.currentTime = 0;
+      gameState = 4;
+      
+    } else if (gameState === 4) {
+      this.beat.stop();
+      this.melody.stop();
+      this.ambience.stop();
+      gameState = 0;
+      // console.log("working")
+      
+      //run the check here to see if they match up, play animation of somesort??
+      this.checking(original, current, gameState);
+    }
+  }
+
+  async sendData(current) {
+    const data = { current }; //store the buildings the user selected and the url for reference, alongside the day they were currently viewing
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json" //data type is json
+      },
+      body: JSON.stringify(data) //turn data to json string for storing
+    }; //settings for sending data
+    const port = process.env.PORT || 8081;
+    const response = await fetch(`http://localhost:${port}/api/`, options); //await /api fetch connection
+    const json = await response.json(); //check it's sent and console.log the response.
+    console.log(json);
+  }
+
+  originalAudio(gameState, beat, melody, ambience, beatOrg, melodyOrg, ambienceOrg, current, original, database, p5) {
+    if (gameState === 0) {
+      /*
+      ambient.src =
+        "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_" +
+        original[2] +
+        ".wav?v=1582204180625";
+      melody.src =
+        "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_" +
+        original[1] +
+        ".wav?v=1582204180625";
+      beat.src =
+        "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_" +
+        original[0] +
+        ".wav?v=1582204180625";
+      */
+      gameState = 5;
+      //initialise
+      beat.volume = 0.1;
+      melody.volume = 0.1;
+      ambience.volume = 0.1;
+      //beat.currentTime = 0;
+      //melody.currentTime = 0;
+      beatOrg.loop();
+      melodyOrg.loop();
+      ambienceOrg.loop();
+      
+    } 
+    else if (gameState === 1) {
+      this.sendData(current);
+      gameState = 0;
+      let randomer = Math.floor(Math.random() * database.length);
+      console.log(database);
+      original = database[randomer].current;
+      beatOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+original[0]+".wav?v=1582204180625");
+      melodyOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+original[1]+".wav?v=1582204180625");
+      ambienceOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+original[2]+".wav?v=1582204180625");
+      beatOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
+      melodyOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
+      ambienceOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
+    }
+    else if (gameState === 5) {
+      beatOrg.p5sound.stop();
+      melodyOrg.p5sound.stop();
+      ambienceOrg.p5sound.stop();
+      gameState = 0;
+    }
+  }
+
+  checking(original, current, gameState) {
+    if (
+      original[0] == current[0] &&
+      original[1] == current[1] &&
+      original[2] == current[2] &&
+      original[3] == current[3]
+    ) gameState = 1;
+  }
+  // console.log(this.x,this.y,this.x1,this.y1);
+  // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
     
   draw = p5 => {
-    p5.background(0, 0, 0, 0);
+    p5.background(0, 0, 0);
     // this.xPos = p5.map(this.x,0,1024,0,500);
     // this.yPos = p5.map(this.y,0,1024,0,500);
     // this.xSize = p5.map(this.x1,0,1024,0,500);
     // this.ySize = p5.map(this.y1,0,1024,0,500);
     // p5.ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
     // console.log(this.original);
+
     if (this.gameState === 2) {
-      recieveDatabase(this.gameState, this.database, this.original, this.beat, this.melody, this.ambience);
+      this.recieveDatabase(this.gameState, this.database, this.original, this.beat, this.melody, this.ambience);
     }
-    visualiserLoop(this.gameState, this.spectrum, this.width, this.height);
+    this.visualiserLoop(this.gameState, this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0) {
       p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width-10,this.height-10);
     }
@@ -87,154 +236,15 @@ export default class Sketchp5 extends Component {
     }
 
     if (this.btn1 === 1) {
-      toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original);
+      this.gameState = 0;
+      // console.log(this.gameState);
+      this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
     } else if (this.btn2 === 2) {
-      originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database);
+      this.gameState = 1;
+      this.originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
     }
-
-
-    function visualiserLoop(gameState, spectrum, width, height) {
-
-      //let spectrum = this.fft.analyze();
-      p5.noStroke();
-      p5.fill(255, 255, 0);
-      // console.log(gameState);
-      if (gameState === 4) {
-        p5.fill(0, 255, 0);
-      }
-      if (gameState === 5) {
-        p5.fill(255, 0, 0);
-      }
-      for (let i = 0; i< spectrum.length; i++){
-        let x = p5.map(i, 0, spectrum.length, 0, width);
-        let h = -height + p5.map(spectrum[i], 0, 255, height, 0);
-        p5.rect(x, height, width / spectrum.length, h );
-      }
-    }
-
-    async function recieveDatabase(gameState, database, original, beat, melody, ambience) {
-      try {
-        gameState = 3;
-        const port = process.env.PORT || 8081;
-        const response = await fetch(`http://localhost:${port}/api/`); //await /api fetch connection
-        database = await response.json(); //await the response in json form
-        console.log(database);
-        //database = data;
-        let randomer = Math.floor(Math.random() * database.length);
-        original = database[randomer].current;
-        
-        beat.rate(original[3]);
-        melody.rate(original[3]);
-        ambience.rate(original[3]);
-        gameState = 0;
-        console.log(gameState)
-      } catch (err) {
-        console.log(err); //console.log any errors recieved if failed to get database
-        gameState = 2;
-      }
-    }
-
-    function toggleAudio(gameState, beat, melody, ambience, current, original) {
-      if (gameState == 0) {
-        //initialise
-        beat.loop();
-        melody.loop();
-        ambience.loop();
-        // beat.setVolume = 0.1;
-        // melody.setVolume = 0.1;
-        // ambience.setVolume = 0.1;
-        beat.rate(1+(p5.int(current[3])-4)/8);
-        melody.rate(1+(p5.int(current[3])-4)/8);
-        ambience.rate(1+(p5.int(current[3])-4)/8);
-        //beat.currentTime = 0;
-        //melody.currentTime = 0;
-        gameState = 4;
-        
-      } else if (gameState == 4) {
-        this.beat.stop();
-        this.melody.stop();
-        this.ambience.stop();
-        gameState = 0;
-        console.log("working")
-        
-        //run the check here to see if they match up, play animation of somesort??
-        checking(original, current, gameState);
-      }
-    }
-
-    async function sendData(current) {
-      const data = { current }; //store the buildings the user selected and the url for reference, alongside the day they were currently viewing
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json" //data type is json
-        },
-        body: JSON.stringify(data) //turn data to json string for storing
-      }; //settings for sending data
-      const response = await fetch("/api", options); //await a reponse from the api using options specified above.
-      const json = await response.json(); //check it's sent and console.log the response.
-      console.log(json);
-    }
-
-    function originalAudio(gameState, beat, melody, ambience, beatOrg, melodyOrg, ambienceOrg, current, original, database) {
-      if (gameState == 0) {
-        /*
-        ambient.src =
-          "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_" +
-          original[2] +
-          ".wav?v=1582204180625";
-        melody.src =
-          "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_" +
-          original[1] +
-          ".wav?v=1582204180625";
-        beat.src =
-          "https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_" +
-          original[0] +
-          ".wav?v=1582204180625";
-        */
-        gameState = 5;
-        //initialise
-        beat.p5sound.volume = 0.1;
-        melody.p5sound.volume = 0.1;
-        ambience.p5sound.volume = 0.1;
-        //beat.currentTime = 0;
-        //melody.currentTime = 0;
-        beatOrg.p5sound.loop();
-        melodyOrg.p5sound.loop();
-        ambienceOrg.p5sound.loop();
-        
-      } 
-      else if (gameState == 1) {
-        sendData(this.current);
-        gameState = 0;
-        let randomer = Math.floor(Math.random() * database.length);
-        original = database[randomer].current;
-        beatOrg = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+original[0]+".wav?v=1582204180625");
-        melodyOrg = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+original[1]+".wav?v=1582204180625");
-        ambienceOrg = p5.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+original[2]+".wav?v=1582204180625");
-        beatOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
-        melodyOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
-        ambienceOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
-      }
-      else if (gameState == 5) {
-        beatOrg.p5sound.stop();
-        melodyOrg.p5sound.stop();
-        ambienceOrg.p5sound.stop();
-        gameState = 0;
-      }
-    }
-
-    function checking(original, current, gameState) {
-      if (
-        original[0] == current[0] &&
-        original[1] == current[1] &&
-        original[2] == current[2] &&
-        original[3] == current[3]
-      ) gameState = 1;
-    }
-    // console.log(this.x,this.y,this.x1,this.y1);
-    // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
   };
+
 
 
 
@@ -269,26 +279,33 @@ export default class Sketchp5 extends Component {
 
     if (address === '/analogue') {
       console.log("connected!");
-      this.x = value[0];
-      this.y = value[1];
-      this.x1 = value[2];
-      this.y1 = value[3];
+      this.x = Math.round(value[0]/1024*9);
+      this.y = Math.round(value[1]/1024*9);
+      this.x1 = Math.round(value[2]/1024*9);
+      this.y1 = Math.round(value[3]/1024*9);
       console.log(this.x, this.y, this.x1, this.y1);
-      this.btn1 = value[4];
-      this.btn2 = value[5];
+      //this.btn1 = value[4];
+      //this.btn2 = value[5];
     }
+  }
+
+  buttonOne () {
+    this.btn1 = 1;
+    console.log("bnt1: " + this.btn1);
+  }
+
+  buttonTwo () {
+    this.btn2 = 2;
+    console.log("bnt1: " + this.btn1);
   }
   
   render() {
-    return (<div>
-      <div>
-      {this.toggleAudio}
-        <button onClick={this.originalAudio}> Original Audio</button>
-        <button onClick={this.toggleAudio}>Play Snippet</button>
-      </div>
+    return( 
+    <div>
+      <button onClick={()=>this.buttonOne()}>Toggle Audio</button>
+      <button onClick={()=>this.buttonTwo()}>Original Audio</button>
       <Sketch setup={this.setup} draw={this.draw} />
-      </div>
-    );
+    </div>);
   }
 
 }

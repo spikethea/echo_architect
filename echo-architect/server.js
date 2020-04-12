@@ -16,8 +16,10 @@ database.loadDatabase(); //load database
 
 
 app.all("/api/", (request, response, next) => {
-	response.header("Access-Control-Allow-Origin", "*");
-	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	response.header("Access-Control-Allow-Origin", "*"); // allow any type of origins
+	// response.header("Access-Control-Allow-Headers", "X-Requested-With"); // allow any type of ehaders
+	response.header("Access-Control-Allow-Methods", "GET, POST"); // allow get, post methods
+	response.header("Access-Control-Allow-Headers", "Content-Type"); // only allow headers withh "Content-Type"
 	next()
 });
 
@@ -27,7 +29,7 @@ app.post("/api/", (request, response) => {
   data.timestamp = timestamp; //add timestamp to data
   response.json(data); //takes response for data
   database.insert(data); //add data to database
-  console.log("data"); //data to console
+  console.log(data); //data to console
 }); //route post request
 
 app.get("/api/", (request, response) => {
