@@ -14,9 +14,9 @@ export default class Sketchp5 extends Component {
       oscPortOut: 3331 // this will configure our bridge.js node local server to send OSC messages on port 3331 (we're not actually sending anything in this sketch but it is required)
     };
     this.x = 0; // initial starting x point of our circle
-    this.xPos = 0;
+    // this.xPos = 0;
     this.y = 0; // initial starting y point of our circle
-    this.yPos = 0;
+    // this.yPos = 0;
     this.x1 = 0;
     this.y1 = 0;
     this.xSize = 0;
@@ -28,6 +28,7 @@ export default class Sketchp5 extends Component {
     
 
     this.database = [];
+    this.data = [];
 
     this.gameState = 2; //0 = ready, 1 = create new, 2 = retrieve new code, 3 waiting for new code, 4 = playing current, 5 = playing target
     this.original = [0, 0, 0, 0]; //[beat,melody,ambient,tempo]
@@ -83,26 +84,28 @@ export default class Sketchp5 extends Component {
     }
   }
 
-  async recieveDatabase(gameState, database, original, beat, melody, ambience, p5) {
+  async recieveDatabase(original, beat, melody, ambience, p5) {
     try {
       // console.log("game state: " + gameState);
-      gameState = 3;
+      this.gameState = 3;
       const port = process.env.PORT || 8081;
       const response = await fetch(`http://localhost:${port}/api/`); //await /api fetch connection
-      database = await response.json(); //await the response in json form
-      //console.log(database);
-      //database = data;
-      let randomer = Math.floor(Math.random() * database.length);
-      original = database[randomer].current;
-      // console.log(original[3])
+      const data = await response.json(); //await the response in json form
+      this.database = data;
+      console.log(data);
+      let randomer = Math.floor(Math.random() * this.database.length);
+      original = this.database[randomer].current;
+      console.log(original)
       beat.rate(original[3]);
       melody.rate(original[3]);
       ambience.rate(original[3]);
-      gameState = 0;
-
+      this.gameState = 0;
+      console.log(this.gameState);
+      
+      return (this.database)
     } catch (err) {
       console.log(err); //console.log any errors recieved if failed to get database
-      gameState = 2;
+      this.gameState = 2;
     }
   }
 
@@ -175,9 +178,11 @@ export default class Sketchp5 extends Component {
       ambience.volume = 0.1;
       //beat.currentTime = 0;
       //melody.currentTime = 0;
-      beatOrg.loop();
-      melodyOrg.loop();
-      ambienceOrg.loop();
+      if (!beatOrg.isPlaying() && !melodyOrg.isPlaying() && !ambienceOrg.isPlaying()) {
+        beatOrg.loop();
+        melodyOrg.loop();
+        ambienceOrg.loop();
+      }     
       
     } 
     else if (gameState === 1) {
@@ -186,12 +191,10 @@ export default class Sketchp5 extends Component {
       let randomer = Math.floor(Math.random() * database.length);
       console.log(database);
       original = database[randomer].current;
-      beatOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+original[0]+".wav?v=1582204180625");
-      melodyOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+original[1]+".wav?v=1582204180625");
-      ambienceOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+original[2]+".wav?v=1582204180625");
-      beatOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
-      melodyOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
-      ambienceOrg.p5sound.rate(1+(p5.int(current[3])-4)/8);
+      beatOrg.rate(1+(p5.int(current[3])-4)/8);
+      melodyOrg.rate(1+(p5.int(current[3])-4)/8);
+      ambienceOrg.rate(1+(p5.int(current[3])-4)/8);
+      this.btn2 = 1;
     }
     else if (gameState === 5) {
       beatOrg.p5sound.stop();
@@ -200,6 +203,7 @@ export default class Sketchp5 extends Component {
       gameState = 0;
     }
   }
+
 
   checking(original, current, gameState) {
     if (
@@ -219,10 +223,13 @@ export default class Sketchp5 extends Component {
     // this.xSize = p5.map(this.x1,0,1024,0,500);
     // this.ySize = p5.map(this.y1,0,1024,0,500);
     // p5.ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
-    // console.log(this.original);
-
+    //console.log(this.database);
+   
     if (this.gameState === 2) {
-      this.recieveDatabase(this.gameState, this.database, this.original, this.beat, this.melody, this.ambience);
+      console.log("receiving database");
+    console.log(this.gameState)  
+    this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
+      console.log(this.database);
     }
     this.visualiserLoop(this.gameState, this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0) {
@@ -240,7 +247,7 @@ export default class Sketchp5 extends Component {
       // console.log(this.gameState);
       this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
     } else if (this.btn2 === 2) {
-      this.gameState = 1;
+      console.log(this.gameState)  
       this.originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
     }
   };
@@ -275,7 +282,7 @@ export default class Sketchp5 extends Component {
 }
 
   receiveOsc(address, value) {
-    // console.log("received OSC: " + address + ", " + value);
+    //console.log("received OSC: " + address + ", " + value);
 
     if (address === '/analogue') {
       console.log("connected!");
@@ -283,8 +290,9 @@ export default class Sketchp5 extends Component {
       this.y = Math.round(value[1]/1024*9);
       this.x1 = Math.round(value[2]/1024*9);
       this.y1 = Math.round(value[3]/1024*9);
-      console.log(this.x, this.y, this.x1, this.y1);
-      //this.btn1 = value[4];
+      
+      this.current = [this.x, this.y, this.x1, this.y1];
+      console.log(this.current);
       //this.btn2 = value[5];
     }
   }
@@ -296,7 +304,7 @@ export default class Sketchp5 extends Component {
 
   buttonTwo () {
     this.btn2 = 2;
-    console.log("bnt1: " + this.btn1);
+    console.log("bnt2: " + this.btn1);
   }
   
   render() {
