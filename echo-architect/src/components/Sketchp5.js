@@ -4,6 +4,29 @@ import p5sound from "p5";
 import "p5/lib/addons/p5.sound";
 import socketIOClient from 'socket.io-client';
 
+import beat_0 from "../assets/beat_0.mp3";
+import beat_1 from "../assets/beat_1.mp3";
+import beat_2 from "../assets/beat_2.mp3";
+import beat_3 from "../assets/beat_3.mp3";
+import beat_4 from "../assets/beat_4.mp3";
+import beat_5 from "../assets/beat_5.mp3";
+import beat_6 from "../assets/beat_6.mp3";
+import beat_7 from "../assets/beat_7.mp3";
+import beat_8 from "../assets/beat_8.mp3";
+import beat_9 from "../assets/beat_9.mp3";
+
+import melody_0 from "../assets/melody_0.mp3";
+import melody_1 from "../assets/melody_1.mp3";
+import melody_2 from "../assets/melody_2.mp3";
+import melody_3 from "../assets/melody_3.mp3";
+import melody_4 from "../assets/melody_4.mp3";
+import melody_5 from "../assets/melody_5.mp3";
+import melody_6 from "../assets/melody_6.mp3";
+import melody_7 from "../assets/melody_7.mp3";
+import melody_8 from "../assets/melody_8.mp3";
+import melody_9 from "../assets/melody_9.mp3";
+
+
 export default class Sketchp5 extends Component {
 
   constructor(props) {
@@ -13,6 +36,8 @@ export default class Sketchp5 extends Component {
       oscPortIn: 7500, // this will configure our bridge.js node local server to receive OSC messages on port 7500
       oscPortOut: 3331 // this will configure our bridge.js node local server to send OSC messages on port 3331 (we're not actually sending anything in this sketch but it is required)
     };
+
+    this.loading = true;
     this.x = 0; // initial starting x point of our circle
     // this.xPos = 0;
     this.y = 0; // initial starting y point of our circle
@@ -26,7 +51,7 @@ export default class Sketchp5 extends Component {
     this.width = 500;
     this.height = 500;
     
-
+    
     this.database = [];
     this.data = [];
 
@@ -36,27 +61,50 @@ export default class Sketchp5 extends Component {
     this.fft = new p5sound.FFT();
     this.spectrum = this.fft.analyze();
     
-    this.beat = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.current[0]+".wav?v=1582204180625");
-    this.melody = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.current[1]+".wav?v=1582204180625");
-    this.ambience = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.current[1]+".wav?v=1582204180625");
-    this.beatOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.original[0]+".wav?v=1582204180625");
-    this.melodyOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.original[1]+".wav?v=1582204180625");
-    this.ambienceOrg = new p5sound.SoundFile ("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.original[2]+".wav?v=1582204180625")
+
+    
+      this.beat = [
+        new p5sound.SoundFile(beat_0),
+        new p5sound.SoundFile(beat_1),
+        new p5sound.SoundFile(beat_2),
+        new p5sound.SoundFile(beat_3),
+        new p5sound.SoundFile(beat_4),
+        new p5sound.SoundFile(beat_5),
+        new p5sound.SoundFile(beat_6),
+        new p5sound.SoundFile(beat_7),
+        new p5sound.SoundFile(beat_8),
+        new p5sound.SoundFile(beat_9),
+      ]
+
+      this.melody = [
+        new p5sound.SoundFile(melody_0),
+        new p5sound.SoundFile(melody_1),
+        new p5sound.SoundFile(melody_2),
+        new p5sound.SoundFile(melody_3),
+        new p5sound.SoundFile(melody_4),
+        new p5sound.SoundFile(melody_5),
+        new p5sound.SoundFile(melody_6),
+        new p5sound.SoundFile(melody_7),
+        new p5sound.SoundFile(melody_8),
+        new p5sound.SoundFile(melody_9),
+      ]
+      
+    
+    //this.beatOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.original[0]+".wav?v=1582204180625");
+    //this.melodyOrg = new p5sound.SoundFile("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.original[1]+".wav?v=1582204180625");
+    //this.ambienceOrg = new p5sound.SoundFile ("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.original[2]+".wav?v=1582204180625")
   }
 
   preload = p5 => {
-    this.beat = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.current[1]+".wav?v=1582204180625");
-    this.melody = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.current[1]+".wav?v=1582204180625");
-    this.ambience = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.current[1]+".wav?v=1582204180625");
-    this.beatOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fbeat_"+this.original[0]+".wav?v=1582204180625");
-    this.melodyOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fmelody_"+this.original[1]+".wav?v=1582204180625");
-    this.ambienceOrg = p5sound.loadSound("https://cdn.glitch.com/d74188cf-2271-4e07-b8f6-5a3fb2c58afe%2Fambient_"+this.original[2]+".wav?v=1582204180625");
+
   }
   
   setup = (p5, canvasParentRef) => {
+    
     p5.createCanvas(this.width, this.height).parent(canvasParentRef); // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
     p5.textSize(30);
-    //this.beat.play();
+    console.log(this.beat)
+    //this.beat[4].play();
     //this.melody.play();
     //this.ambience.play();
     //this.beatOrg.play();
@@ -96,9 +144,8 @@ export default class Sketchp5 extends Component {
       let randomer = Math.floor(Math.random() * this.database.length);
       original = this.database[randomer].current;
       console.log(original)
-      beat.rate(original[3]);
-      melody.rate(original[3]);
-      ambience.rate(original[3]);
+      beat[original[0]].rate(original[3]);
+      melody[original[1]].rate(original[3]);
       this.gameState = 0;
       console.log(this.gameState);
       
@@ -112,26 +159,24 @@ export default class Sketchp5 extends Component {
   toggleAudio(gameState, beat, melody, ambience, current, original, p5) {
     if (gameState === 0) {
       //initialise
-      if (!beat.isPlaying() && !melody.isPlaying() && !ambience.isPlaying()) {
-        beat.loop();
-        melody.loop();
-        ambience.loop();
+      if (!beat[current[0]].isPlaying() && !melody[current[1]].isPlaying()) {
+        beat[current[0]].loop();
+        melody[current[1]].loop();
+        
       }
       
       // beat.setVolume = 0.1;
       // melody.setVolume = 0.1;
       // ambience.setVolume = 0.1;
-      beat.rate(1+(p5.int(current[3])-4)/8);
-      melody.rate(1+(p5.int(current[3])-4)/8);
-      ambience.rate(1+(p5.int(current[3])-4)/8);
+      beat[current[0]].rate(1+(p5.int(current[3])-4)/8);
+      melody[current[1]].rate(1+(p5.int(current[3])-4)/8);
       //beat.currentTime = 0;
       //melody.currentTime = 0;
       gameState = 4;
       
     } else if (gameState === 4) {
-      this.beat.stop();
-      this.melody.stop();
-      this.ambience.stop();
+      beat[current[0]].stop();
+      melody[current[1]].stop();
       gameState = 0;
       // console.log("working")
       
@@ -173,15 +218,18 @@ export default class Sketchp5 extends Component {
       */
       gameState = 5;
       //initialise
-      beat.volume = 0.1;
-      melody.volume = 0.1;
-      ambience.volume = 0.1;
+      beat[original[0]].volume = 0.1;
+      melody[original[0]].volume = 0.1;
       //beat.currentTime = 0;
       //melody.currentTime = 0;
-      if (!beatOrg.isPlaying() && !melodyOrg.isPlaying() && !ambienceOrg.isPlaying()) {
-        beatOrg.loop();
-        melodyOrg.loop();
-        ambienceOrg.loop();
+      if (!beat[original[0]].isPlaying() && !melody[original[0]].isPlaying()) {
+
+        beat[original[0]].rate(1+(p5.int(original[3])-4)/8);
+        melody[original[1]].rate(1+(p5.int(original[3])-4)/8);
+
+        beat[original[0]].loop();
+        melody[original[1]].loop();
+
       }     
       
     } 
@@ -191,15 +239,11 @@ export default class Sketchp5 extends Component {
       let randomer = Math.floor(Math.random() * database.length);
       console.log(database);
       original = database[randomer].current;
-      beatOrg.rate(1+(p5.int(current[3])-4)/8);
-      melodyOrg.rate(1+(p5.int(current[3])-4)/8);
-      ambienceOrg.rate(1+(p5.int(current[3])-4)/8);
       this.btn2 = 1;
     }
     else if (gameState === 5) {
-      beatOrg.p5sound.stop();
-      melodyOrg.p5sound.stop();
-      ambienceOrg.p5sound.stop();
+      beat[original[0]].stop();
+      melody[original[1]].stop();
       gameState = 0;
     }
   }
@@ -207,10 +251,10 @@ export default class Sketchp5 extends Component {
 
   checking(original, current, gameState) {
     if (
-      original[0] == current[0] &&
-      original[1] == current[1] &&
-      original[2] == current[2] &&
-      original[3] == current[3]
+      original[0] === current[0] &&
+      original[1] === current[1] &&
+      original[2] === current[2] &&
+      original[3] === current[3]
     ) gameState = 1;
   }
   // console.log(this.x,this.y,this.x1,this.y1);
@@ -224,10 +268,15 @@ export default class Sketchp5 extends Component {
     // this.ySize = p5.map(this.y1,0,1024,0,500);
     // p5.ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
     //console.log(this.database);
+    console.log(this.gameState)  
+    if (this.beat[9].isLoaded() === true && this.melody[9].isLoaded() === true) {
+      console.log("beat loaded!")
+      this.loading = false
+    }
    
     if (this.gameState === 2) {
       console.log("receiving database");
-    console.log(this.gameState)  
+
     this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
       console.log(this.database);
     }
@@ -243,8 +292,7 @@ export default class Sketchp5 extends Component {
     }
 
     if (this.btn1 === 1) {
-      this.gameState = 0;
-      // console.log(this.gameState);
+      
       this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
     } else if (this.btn2 === 2) {
       console.log(this.gameState)  
@@ -297,20 +345,25 @@ export default class Sketchp5 extends Component {
     }
   }
 
-  buttonOne () {
+  buttonOne () { if (this.loading === false) {
     this.btn1 = 1;
     console.log("bnt1: " + this.btn1);
   }
+  }
 
-  buttonTwo () {
+  buttonTwo () { if (this.loading === false) {
     this.btn2 = 2;
     console.log("bnt2: " + this.btn1);
+}
   }
   
   render() {
-    return( 
+    
+
+
+   return( 
     <div>
-      <button onClick={()=>this.buttonOne()}>Toggle Audio</button>
+      <button id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
       <button onClick={()=>this.buttonTwo()}>Original Audio</button>
       <Sketch setup={this.setup} draw={this.draw} />
     </div>);
