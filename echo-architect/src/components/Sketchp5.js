@@ -118,7 +118,6 @@ export default class Sketchp5 extends Component {
     
     waveform = this.fft.waveform();
     p5.push();
-    p5.blendMode(MULTIPLY);
     p5.noFill();
     p5.beginShape();
     p5.stroke(255);
@@ -385,7 +384,7 @@ export default class Sketchp5 extends Component {
    return( 
     <div>
       <button style={{position: "absolute", top: "6em"}} id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
-      <button style={{position: "absolute", top: "6em", left:"1em"}} onClick={()=>this.buttonTwo()}>Original Audio</button>
+      <button style={{position: "absolute", top: "6em", left:"30em"}} onClick={()=>this.buttonTwo()}>Original Audio</button>
       <Sketch setup={this.setup} draw={this.draw} />
     </div>);
   }
