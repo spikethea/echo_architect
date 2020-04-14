@@ -36,11 +36,11 @@ class App extends Component {// Condiitional Rendering
     <div className="App">
       <header>
       </header>
-      <Sketchp5 style={{zIndex:-1}}/>
+      <Sketchp5 style={{zIndex:-3}}/>
       <Notification style={{zIndex:2}}/>
       <Metronome style={{zIndex:1}}/>
       {this.isMenuDisplayed()}
-      <BackgroundParticles style={{zIndex:-2}} />
+      <BackgroundParticles style={{zIndex:-1}} />
     </div>
     
 
