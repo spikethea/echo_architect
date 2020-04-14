@@ -113,23 +113,25 @@ export default class Sketchp5 extends Component {
     
   }
 
-  visualiserLoop(spectrum, width, height, p5) {
+  visualiserLoop(waveform, width, height, p5) {
     //console.log(this.spectrum);
-    spectrum = this.fft.analyze();
-    p5.noStroke();
-    p5.fill(255, 255, 0);
-    // console.log("game state: " + gameState);
-    if (this.gameState === 4) {
-      p5.fill(0, 255, 0);
+    
+    waveform = this.fft.waveform();
+    p5.push();
+    p5.blendMode(MULTIPLY);
+    p5.noFill();
+    p5.beginShape();
+    p5.stroke(255);
+    p5.strokeWeight(5);
+    for (let i = 0; i < waveform.length; i++){
+      let x = p5.map(i, 0, waveform.length, 0, width);
+      let y = p5.map( waveform[i], -1, 1, 0, height);
+      p5.vertex(x,y);
     }
-    if (this.gameState === 5) {
-      p5.fill(255, 0, 0);
-    }
-    for (let i = 0; i< spectrum.length; i++){
-      let x = p5.map(i, 0, spectrum.length, 0, width);
-      let h = -height + p5.map(spectrum[i], 0, 255, height, 0);
-      p5.rect(x, height, width / spectrum.length, h );
-    }
+    p5.endShape();
+    p5.pop();
+    p5.stroke(0);
+    p5.fill(255,255,0);
   }
 
   async recieveDatabase(original, beat, melody, ambience, p5) {
@@ -382,8 +384,8 @@ export default class Sketchp5 extends Component {
 
    return( 
     <div>
-      <button id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
-      <button onClick={()=>this.buttonTwo()}>Original Audio</button>
+      <button style={{position: "absolute", top: "6em"}} id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
+      <button style={{position: "absolute", top: "6em", left:"1em"}} onClick={()=>this.buttonTwo()}>Original Audio</button>
       <Sketch setup={this.setup} draw={this.draw} />
     </div>);
   }
