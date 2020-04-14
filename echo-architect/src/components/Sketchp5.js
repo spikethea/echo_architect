@@ -147,8 +147,7 @@ export default class Sketchp5 extends Component {
       beat[original[0]].rate(original[3]);
       melody[original[1]].rate(original[3]);
       this.gameState = 0;
-      console.log(this.gameState);
-      
+      console.log("how many times");
       return (this.database)
     } catch (err) {
       console.log(err); //console.log any errors recieved if failed to get database
@@ -157,31 +156,37 @@ export default class Sketchp5 extends Component {
   }
 
   toggleAudio(gameState, beat, melody, ambience, current, original, p5) {
-    if (gameState === 0) {
-      //initialise
-      if (!beat[current[0]].isPlaying() && !melody[current[1]].isPlaying()) {
-        beat[current[0]].loop();
-        melody[current[1]].loop();
+    if (this.btn1 === 1) {
+    this.btn1 = 0;
+    
+
+      if (gameState === 0) {
+        //initialise
+        if (!beat[current[0]].isPlaying() && !melody[current[1]].isPlaying()) {
+          beat[current[0]].loop();
+          melody[current[1]].loop();
+          
+        }
         
+        // beat.setVolume = 0.1;
+        // melody.setVolume = 0.1;
+        // ambience.setVolume = 0.1;
+        beat[current[0]].rate(1+(p5.int(current[3])-4)/8);
+        melody[current[1]].rate(1+(p5.int(current[3])-4)/8);
+        //beat.currentTime = 0;
+        //melody.currentTime = 0;
+
+        gameState = 4;
+        
+      } else if (gameState === 4) {
+        beat[current[0]].stop();
+        melody[current[1]].stop();
+        gameState = 0;
+        // console.log("working")
+        
+        //run the check here to see if they match up, play animation of somesort??
+        this.checking(original, current, gameState);
       }
-      
-      // beat.setVolume = 0.1;
-      // melody.setVolume = 0.1;
-      // ambience.setVolume = 0.1;
-      beat[current[0]].rate(1+(p5.int(current[3])-4)/8);
-      melody[current[1]].rate(1+(p5.int(current[3])-4)/8);
-      //beat.currentTime = 0;
-      //melody.currentTime = 0;
-      gameState = 4;
-      
-    } else if (gameState === 4) {
-      beat[current[0]].stop();
-      melody[current[1]].stop();
-      gameState = 0;
-      // console.log("working")
-      
-      //run the check here to see if they match up, play animation of somesort??
-      this.checking(original, current, gameState);
     }
   }
 
@@ -268,7 +273,7 @@ export default class Sketchp5 extends Component {
     // this.ySize = p5.map(this.y1,0,1024,0,500);
     // p5.ellipse(this.xPos, this.yPos, this.xSize, this.ySize);
     //console.log(this.database);
-    console.log(this.gameState)  
+    //console.log(this.gameState)  
     if (this.beat[9].isLoaded() === true && this.melody[9].isLoaded() === true) {
       console.log("beat loaded!")
       this.loading = false
@@ -278,7 +283,7 @@ export default class Sketchp5 extends Component {
       console.log("receiving database");
 
     this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
-      console.log(this.database);
+    //  console.log(this.database);
     }
     this.visualiserLoop(this.gameState, this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0) {
@@ -294,9 +299,11 @@ export default class Sketchp5 extends Component {
     if (this.btn1 === 1) {
       
       this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
+
     } else if (this.btn2 === 2) {
       console.log(this.gameState)  
       this.originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
+
     }
   };
 
@@ -333,7 +340,7 @@ export default class Sketchp5 extends Component {
     //console.log("received OSC: " + address + ", " + value);
 
     if (address === '/analogue') {
-      console.log("connected!");
+      //console.log("connected!");
       this.x = Math.round(value[0]/1024*9);
       this.y = Math.round(value[1]/1024*9);
       this.x1 = Math.round(value[2]/1024*9);
@@ -346,14 +353,20 @@ export default class Sketchp5 extends Component {
   }
 
   buttonOne () { if (this.loading === false) {
-    this.btn1 = 1;
-    console.log("bnt1: " + this.btn1);
-  }
+    
+      if (this.btn1 === 0) {
+        console.log("bnt1: " + this.btn1);
+        this.btn1 = 1;
+      } 
+    }
   }
 
   buttonTwo () { if (this.loading === false) {
     this.btn2 = 2;
     console.log("bnt2: " + this.btn1);
+    if(this.btn2 === 2){
+      this.btn2 = 0
+    };
 }
   }
   
