@@ -147,8 +147,8 @@ export default class Sketchp5 extends Component {
       beat[original[0]].rate(original[3]);
       melody[original[1]].rate(original[3]);
       this.gameState = 0;
-      console.log("how many times");
-      return (this.database)
+      //console.log("how many times");
+      return this.database;
     } catch (err) {
       console.log(err); //console.log any errors recieved if failed to get database
       this.gameState = 2;
@@ -157,7 +157,7 @@ export default class Sketchp5 extends Component {
 
   toggleAudio(gameState, beat, melody, ambience, current, original, p5) {
     if (this.btn1 === 1) {
-    this.btn1 = 0;
+      // this.btn1 = 0;
     
 
       if (gameState === 0) {
@@ -280,7 +280,7 @@ export default class Sketchp5 extends Component {
     }
    
     if (this.gameState === 2) {
-      console.log("receiving database");
+      //console.log("receiving database");
 
     this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
     //  console.log(this.database);
@@ -301,7 +301,7 @@ export default class Sketchp5 extends Component {
       this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
 
     } else if (this.btn2 === 2) {
-      console.log(this.gameState)  
+      //console.log(this.gameState)  
       this.originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
 
     }
@@ -347,7 +347,7 @@ export default class Sketchp5 extends Component {
       this.y1 = Math.round(value[3]/1024*9);
       
       this.current = [this.x, this.y, this.x1, this.y1];
-      console.log(this.current);
+      //console.log(this.current);
       //this.btn2 = value[5];
     }
   }
@@ -357,7 +357,7 @@ export default class Sketchp5 extends Component {
       if (this.btn1 === 0) {
         console.log("bnt1: " + this.btn1);
         this.btn1 = 1;
-      } 
+      } else this.btn1 = 0;
     }
   }
 
