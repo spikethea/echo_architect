@@ -156,8 +156,8 @@ export default class Sketchp5 extends Component {
   }
 
   toggleAudio(gameState, beat, melody, ambience, current, original, p5) {
-    if (this.btn1 === 1) {
-      // this.btn1 = 0;
+
+      this.btn1 = 0;
     
 
       if (gameState === 0) {
@@ -165,7 +165,7 @@ export default class Sketchp5 extends Component {
         if (!beat[current[0]].isPlaying() && !melody[current[1]].isPlaying()) {
           beat[current[0]].loop();
           melody[current[1]].loop();
-          
+          console.log("playing");
         }
         
         // beat.setVolume = 0.1;
@@ -187,7 +187,7 @@ export default class Sketchp5 extends Component {
         //run the check here to see if they match up, play animation of somesort??
         this.checking(original, current, gameState);
       }
-    }
+    
   }
 
   async sendData(current) {
@@ -300,7 +300,9 @@ export default class Sketchp5 extends Component {
       
       this.toggleAudio(this.gameState, this.beat, this.melody, this.ambience, this.current, this.original, p5);
 
-    } else if (this.btn2 === 2) {
+    }
+    
+    if (this.btn2 === 2) {
       //console.log(this.gameState)  
       this.originalAudio(this.gameState, this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
 
@@ -354,10 +356,11 @@ export default class Sketchp5 extends Component {
 
   buttonOne () { if (this.loading === false) {
     
-      if (this.btn1 === 0) {
-        console.log("bnt1: " + this.btn1);
-        this.btn1 = 1;
-      } else this.btn1 = 0;
+      
+      this.btn1 = 1;
+      console.log("bnt1: " + this.btn1);
+
+      
     }
   }
 
