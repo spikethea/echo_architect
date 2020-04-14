@@ -60,7 +60,6 @@ export default class Sketchp5 extends Component {
     this.original = [0, 0, 0, 0]; //[beat,melody,ambient,tempo]
     this.current = [4, 4, 4, 4]; //what the user changes
     this.fft = new p5sound.FFT();
-    this.spectrum = this.fft.analyze();
     
 
     
@@ -114,16 +113,16 @@ export default class Sketchp5 extends Component {
     
   }
 
-  visualiserLoop(gameState, spectrum, width, height, p5) {
-    //console.log(p5);
-    //let spectrum = this.fft.analyze();
+  visualiserLoop(spectrum, width, height, p5) {
+    //console.log(this.spectrum);
+    spectrum = this.fft.analyze();
     p5.noStroke();
-    p5.fill('255, 255, 0');
+    p5.fill(255, 255, 0);
     // console.log("game state: " + gameState);
-    if (gameState === 4) {
+    if (this.gameState === 4) {
       p5.fill(0, 255, 0);
     }
-    if (gameState === 5) {
+    if (this.gameState === 5) {
       p5.fill(255, 0, 0);
     }
     for (let i = 0; i< spectrum.length; i++){
@@ -273,6 +272,7 @@ export default class Sketchp5 extends Component {
   // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
     
   draw = p5 => {
+    
     p5.background('#00020B');
     // this.xPos = p5.map(this.x,0,1024,0,500);
     // this.yPos = p5.map(this.y,0,1024,0,500);
@@ -292,7 +292,7 @@ export default class Sketchp5 extends Component {
     this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
     //  console.log(this.database);
     }
-    this.visualiserLoop(this.gameState, this.spectrum, this.width, this.height, p5);
+    this.visualiserLoop(this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0) {
       p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width-10,this.height-10);
     }
