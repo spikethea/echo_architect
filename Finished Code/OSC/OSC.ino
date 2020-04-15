@@ -59,8 +59,8 @@ void loop() {
     msg.add(slide2_val); // add reading from analogue pin 0
     msg.add(slide3_val); // add reading from analogue pin 0
     msg.add(slide4_val); // add reading from analogue pin 0
-    //msg.add(btn1_val);
-    //msg.add(btn2_val);
+    msg.add(btn1_val);
+    msg.add(btn2_val);
     Udp.beginPacket(outIp, outPort);
     msg.send(Udp); // send the bytes to the SLIP stream
     Udp.endPacket(); // mark the end of the OSC Packet

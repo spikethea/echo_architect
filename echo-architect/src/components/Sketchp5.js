@@ -47,6 +47,7 @@ export default class Sketchp5 extends Component {
     this.y1 = 0;
     this.xSize = 0;
     this.ySize = 0;
+    this.timebtn1 = 0;
     this.btn1 = 0;
     this.btn2 = 0;
     this.width = window.innerWidth;
@@ -120,14 +121,47 @@ export default class Sketchp5 extends Component {
     p5.push();
     p5.noFill();
     p5.beginShape();
-    p5.stroke(255);
-    p5.strokeWeight(5);
+    p5.stroke(255,255,255,255);
+    p5.strokeWeight(2);
     for (let i = 0; i < waveform.length; i++){
       let x = p5.map(i, 0, waveform.length, 0, width);
       let y = p5.map( waveform[i], -1, 1, 0, height);
       p5.vertex(x,y);
     }
     p5.endShape();
+
+    p5.beginShape();
+    if (this.gameState === 4)
+     p5.stroke(255,0,0,30);
+    else if (this.gameState === 5)
+    p5.stroke(0,255,0,30);
+     else if (this.gameState === 0)
+    p5.stroke(255,255,255,30);
+
+    p5.strokeWeight(50);
+    for (let i = 0; i < waveform.length; i++){
+      let x = p5.map(i, 0, waveform.length, 0, width);
+      let y = p5.map( waveform[i], -1, 1, 0, height);
+      p5.vertex(x,y);
+    }
+    p5.endShape();
+
+    p5.beginShape();
+    if (this.gameState === 4)
+     p5.stroke(255,0,0,5);
+    else if (this.gameState === 5)
+     p5.stroke(0,255,0,5);
+    else if (this.gameState === 0)
+     p5.stroke(255,255,255,5);
+     
+    p5.strokeWeight(150);
+    for (let i = 0; i < waveform.length; i++){
+      let x = p5.map(i, 0, waveform.length, 0, width);
+      let y = p5.map( waveform[i], -1, 1, 0, height);
+      p5.vertex(x,y);
+    }
+    p5.endShape();
+
     p5.pop();
     p5.stroke(0);
     p5.fill(255,255,0);
@@ -308,7 +342,7 @@ export default class Sketchp5 extends Component {
       
       this.toggleAudio(this.beat, this.melody, this.ambience, this.current, this.original, p5);
 
-    } else if (this.btn2 === 2 ) {
+    } else if (this.btn2 === 1 ) {
       //console.log(this.gameState)  
       this.originalAudio(this.beat, this.melody, this.ambience, this.beatOrg, this.melodyOrg, this.ambienceOrg, this.current, this.original, this.database, p5);
 
@@ -348,15 +382,30 @@ export default class Sketchp5 extends Component {
     //console.log("received OSC: " + address + ", " + value);
 
     if (address === '/analogue') {
+      
       //console.log("connected!");
       this.x = Math.round(value[0]/1024*9);
       this.y = Math.round(value[1]/1024*9);
       this.x1 = Math.round(value[2]/1024*9);
       this.y1 = Math.round(value[3]/1024*9);
+      if (value[4] === 1) {
+        //timebtn1= 0
+        this.timebtn1++
+        console.log(this.timebtn1)
+      } else if (value[4] === 0)
+       {this.timebtn1 = 0;}
       
+      if (this.timebtn1 === 10) {
+        this.btn1 = value[4];
+      }
+      
+
+      this.btn2 = value[5];
+
       this.current = [this.x, this.y, this.x1, this.y1];
-      //console.log(this.current);
-      //this.btn2 = value[5];
+      console.log(this.current);
+      console.log(this.btn1, this.btn2);
+      
     }
   }
 
@@ -371,7 +420,7 @@ export default class Sketchp5 extends Component {
   }
 
   buttonTwo () { if (this.loading === false) {
-    this.btn2 = 2;
+    this.btn2 = 1;
     console.log("bnt2: " + this.btn2);
 
 }
