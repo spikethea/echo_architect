@@ -132,11 +132,11 @@ export default class Sketchp5 extends Component {
 
     p5.beginShape();
     if (this.gameState === 4)
-     p5.stroke(255,0,0,18);
+     p5.stroke(255,0,0,10);
     else if (this.gameState === 5)
-    p5.stroke(0,255,0,18);
+    p5.stroke(0,255,0,10);
      else if (this.gameState === 0)
-    p5.stroke(255,255,255,18);
+    p5.stroke(255,255,255,10);
 
     p5.strokeWeight(50);
     for (let i = 0; i < waveform.length; i++){
