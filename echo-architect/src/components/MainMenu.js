@@ -122,7 +122,6 @@ class MainMenu extends Component {
         this.aboutTween = null;
         this.aboutSection = null;
 
-        this.buttonPress = this.buttonPress.bind(this);
         this.countdownInterval = this.countdownInterval.bind(this);
     }
 
