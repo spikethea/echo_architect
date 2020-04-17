@@ -132,11 +132,11 @@ export default class Sketchp5 extends Component {
 
     p5.beginShape();
     if (this.gameState === 4)
-     p5.stroke(255,0,0,30);
+     p5.stroke(255,0,0,18);
     else if (this.gameState === 5)
-    p5.stroke(0,255,0,30);
+    p5.stroke(0,255,0,18);
      else if (this.gameState === 0)
-    p5.stroke(255,255,255,30);
+    p5.stroke(255,255,255,18);
 
     p5.strokeWeight(50);
     for (let i = 0; i < waveform.length; i++){
@@ -177,7 +177,7 @@ export default class Sketchp5 extends Component {
       this.database = data;
       console.log(data);
       let randomer = Math.floor(Math.random() * this.database.length);
-      original = this.database[randomer].current;
+      original = this.database[this.props.songchoice].current;
       console.log(original)
       beat[original[0]].rate(original[3]);
       melody[original[1]].rate(original[3]);
@@ -309,6 +309,7 @@ export default class Sketchp5 extends Component {
   draw = p5 => {
     
     p5.background('#00020B');
+    this.currentDisplay(p5);
     // this.xPos = p5.map(this.x,0,1024,0,500);
     // this.yPos = p5.map(this.y,0,1024,0,500);
     // this.xSize = p5.map(this.x1,0,1024,0,500);
@@ -425,15 +426,38 @@ export default class Sketchp5 extends Component {
 
 }
   }
+
+  currentDisplay(p5) {
+    p5.push();
+    p5.translate(this.width/2,this.height-110);
+    p5.noStroke();
+    p5.fill(255);
+    p5.rect(-2,-2,102,102);
+    for (let i = 0; i<10; i++) {
+      for (let j = 0; j<4; j++) {
+        p5.fill(i*10,i*13,i*20);
+        if (this.current[j] == i) {
+          p5.fill(0,255,0);
+        }
+        p5.rect(i*10,25*j,8,23);
+      }
+    }
+    p5.textSize(20);
+    p5.text('Beat',102,0,100,100);
+    p5.text('Melody',102,25,100,100);
+    p5.text('Pan',102,50,100,100);
+    p5.text('Tempo',102,75,100,100);
+    p5.pop();
+  }
   
   render() {
     
-
+//<button className="p5-button" style={{position: "absolute", top: "6em", zIndex:4}} id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
+//      <button className="p5-button" style={{position: "absolute", top: "6em", left:"30em", zIndex:6}} onClick={()=>this.buttonTwo()}>Original Audio</button>
 
    return( 
-    <div>
-      <button style={{position: "absolute", top: "6em"}} id="p5_loading" onClick={()=>this.buttonOne()}>Toggle Audio</button>
-      <button style={{position: "absolute", top: "6em", left:"30em"}} onClick={()=>this.buttonTwo()}>Original Audio</button>
+    <div> 
+      
       <Sketch setup={this.setup} draw={this.draw} />
     </div>);
   }

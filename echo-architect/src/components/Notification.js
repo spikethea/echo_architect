@@ -15,7 +15,7 @@ class Notification extends Component {
     };
     render() {
       return (<div> <button 
-            className="show"
+            className="notif-button"
             onClick={this.toggle}>Help & Tips</button>
         <div className="container">
          

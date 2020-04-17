@@ -1,4 +1,5 @@
 .container {
+  z-index: 4;
     margin: 1rem;
     display: grid;
     float:right;
@@ -15,6 +16,7 @@ to {top: 20px;}
 }
 
 .sidemenu {
+  z-index: 4;
     top: 0em;
     left: 0em;
     float: right;
@@ -29,6 +31,7 @@ to {top: 20px;}
 }
 
 .sidemenu-body { 
+  z-index: 4;
 background-color: rebeccapurple;
 margin: 1em;
 }

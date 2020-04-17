@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import {TweenMax, Power3} from 'gsap';
 import moneytrees from './money-trees.mp3';
 import  './MainMenu.css'
+import Sketchp5 from './Sketchp5';
+import BackgroundParticles from './BackgroundParticles';
+import dateFormat from 'dateformat';
+
 
 const song = new Audio(moneytrees);
 
@@ -13,11 +17,13 @@ class MainMenu extends Component {
             
             count: 3,
             countdown: false,
+            songchoice: 0,
+            dataReceived: false,
             
             song: [
             {
                 name:"Trap Muzik",
-                length:"02:50",
+                length:"04/04/2020",
                 desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
                 audio: require('./money-trees.mp3'),
                 key:0,
@@ -41,16 +47,70 @@ class MainMenu extends Component {
                 key:3,
             },
             {
-                name:"Alternative Vibes",
+                name:"Custom ",
                 length:"00:00",
                 desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
-                key:3,
+                key:4,
             },
             {
-                name:"Alternative Vibes",
+                name:"Custom",
                 length:"00:00",
                 desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
-                key:3,
+                key:5,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:6,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:7,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:8,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:9,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:10,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:11,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:12,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:13,
+            },
+            {
+                name:"Custom",
+                length:"00:00",
+                desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+                key:14,
             },
             
         ]}
@@ -77,50 +137,192 @@ class MainMenu extends Component {
     } else {
         clearInterval(this.countdownInterval);
         this.aboutTween = TweenMax.to(this.aboutSection, .8,{opacity:0, y: -100, ease: Power3.easeOut});
-        //song.play();
+        console.log("p5");
+        return (<Sketchp5 style={{zIndex:3}}/>)
         }
     }
 
-    buttonPress () {
+    buttonPress (key) {
+
+        console.log(key);
+
+        let localkey = key 
+        
+
+        this.setState({songchoice: localkey});
+
+        console.log(this.state.songchoice);
 
         clearInterval(this.countdownInterval);
-        this.setState({count:3, countdown:true}, 
+        this.setState({count:3, countdown:true, songchoice: key}, 
             ()=>{setInterval(this.countdownInterval, 3000); this.aboutTween = TweenMax.to(this.aboutSection, .8,{opacity:1, y: -100, ease: Power3.easeOut})});
 
 }
 
-    playMusic () {
+swapData() {
+let {database} = this.state
+
+    console.log(dateFormat((new Date(database[0].timestamp)), "shortDate"));
+    let swappedsong = [
+        {
+            name:"Trap Muzik",
+            length:"04/04/2020",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            audio: require('./money-trees.mp3'),
+            key:0,
+        },
+        {
+            name:"Orchestral Competition",
+            length:"01/04/2020",
+            desc: "Tradition Orchestral Music made for the more challenging blah balh blah. Exquisite",
+            key:1,
+        },
+        {
+            name:"Lo-Fi Tune",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:2,
+        },
+        {
+            name:"Alternative Vibes",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:3,
+        },
+        {
+            name:"Custom ",
+            length:dateFormat((new Date(database[0].timestamp)), "shortDate"),
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:4,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:5,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:6,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:7,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:8,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:9,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:10,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:11,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:12,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:13,
+        },
+        {
+            name:"Custom",
+            length:"00:00",
+            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            key:14,
+        },
         
+    ]
+
+    this.setState({song: swappedsong})
+    this.setState({dataReceived: true})
+}
+
+async recieveDatabase() {
+    let {database} = this.state;
+    try {
+
+      const port = process.env.PORT || 8081;
+      const response = await fetch(`http://localhost:${port}/api/`); //await /api fetch connection
+      const data = await response.json(); //await the response in json form
+      this.setState({database: data});
+      
+
+    } catch (err) {
+      console.log(err); //console.log any errors recieved if failed to get database
+      this.gameState = 2;
     }
+    finally{
+    if (!this.state.dataReceived) {
+    this.swapData();
+    }
+    }
+}
 
 
     render () {
-        let {song} = this.state;
 
-        if (!this.state.countdown) {
+        let {song, database} = this.state;
 
-            return (
-                <div ref={p => this.MyMenu = p} className="mainmenu">
-                <p className="title">Song List</p>
-                    <div className="songList">
-                        {song.map(song => (<div onClick={this.buttonPress} className="song-entry">
-                            <h3 className="song-name">{song.name}</h3>
-                            <p className="song-length">{song.length}</p>
-                            <p className="song-desc">{song.desc}</p>
-                        </div>))
-                        }
-                        
-                    </div>
+        console.log(this.state.countdown);
 
-                    </div>
-        
-        )
+        if (!this.state.countdown ) {
             
-            } else if(this.state.countdown) { return(<div className="number">
+
+            console.log(this.state.countdown);
+            this.recieveDatabase();
+            
+            return (
+    <div ref={p => this.MyMenu = p} className="mainmenu">
+    <p className="title">Song List</p>
+        <div className="songList">
+            {song.map(song => (<div onClick={this.buttonPress.bind(this, song.key)}  key={song.key}  className="song-entry">
+                <h3 className="song-name">{song.name}</h3>
+                <p className="song-length">{song.length}</p>
+                <p className="song-desc">{song.desc}</p>
+            </div>))
+            }
+            
+        </div>
+        
+        </div>
+
+)
+            } else if(this.state.countdown) {
+                
+                return(<div><div className="number">
                 <p  ref={p => this.aboutSection = p}>{this.state.count}</p>
+            </div><Sketchp5 style={{zIndex: -3}} songchoice={this.state.songchoice} /><BackgroundParticles style={{zIndex:3}} />
+            
+            
+            
             </div>)}
 
-        
+
     }
 }
 

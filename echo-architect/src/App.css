@@ -13,13 +13,13 @@ body {
   height: 100%;
   margin: 0;
   left: 0;
-  z-index:-1
+  z-index:-3
 }
 
 .particles {
   opacity: 25%;
   top: 0em;
-  z-index: -1;
+  z-index: 0;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -61,7 +61,20 @@ body {
 }
 
 .render-button {
-
+  z-index: 1;
   top:80%;
+
+}
+
+.p5-button {
+  z-index: 1;
+  top:80%;
+
+}
+
+.notif-button {
+  z-index: 1;
+  display: inline;
+  position: relative;
 
 }

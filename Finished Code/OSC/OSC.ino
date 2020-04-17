@@ -25,6 +25,9 @@ const int btn2 = 5;
 
 void setup() {
   // put your setup code here, to run once:
+
+  Serial.begin(9600);
+  Serial.println("hello");
   Ethernet.begin(mac,ip);
     Udp.begin(8888);
     
@@ -39,10 +42,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int32_t slide1_val = analogRead(slide1);
-  int32_t slide2_val = analogRead(slide2);
-  int32_t slide3_val = analogRead(slide3);
-  int32_t slide4_val = analogRead(slide4);
+  int slide1_val = analogRead(slide1);
+  int slide2_val = analogRead(slide2);
+  int slide3_val = analogRead(slide3);
+  int slide4_val = analogRead(slide4);
 
   uint8_t btn1_val = digitalRead(btn1);
   uint8_t btn2_val = digitalRead(btn2);
@@ -67,8 +70,10 @@ void loop() {
     msg.empty(); // free space occupied by message
 
     delay(20);
-//  Serial.println(btn1);
-//  Serial.println("slider 2: " + slide1_val);
-//  Serial.println("slider 3: " + slide1_val);
-//  Serial.println("slider 4: " + slide1_val);
+  Serial.println(btn1_val);
+  Serial.print("slider 1: ");
+  Serial.println(slide1_val);
+  //Serial.println("slider 2: " + slide2_val);
+  //Serial.println("slider 3: " + slide3_val);
+  //Serial.println("slider 4: " + slide4_val);
 }

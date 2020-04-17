@@ -22,7 +22,7 @@ class App extends Component {// Condiitional Rendering
   isMenuDisplayed () {
         if (!this.state.menuDisplayed) {
            return (<div><Logo/><button className="render-button" onClick={() =>{this.setState({menuDisplayed:true})}}>Display Menu</button></div>)} 
-           else return <MainMenu style={{zIndex:3}}/>
+           else return <div><MainMenu/></div>
     } 
 
 
@@ -36,11 +36,11 @@ class App extends Component {// Condiitional Rendering
     <div className="App">
       <header>
       </header>
-      <Sketchp5 style={{zIndex:-3}}/>
       <Notification style={{zIndex:2}}/>
       <Metronome style={{zIndex:1}}/>
       {this.isMenuDisplayed()}
-      <BackgroundParticles style={{zIndex:-1}} />
+      <BackgroundParticles/>
+
     </div>
     
 
