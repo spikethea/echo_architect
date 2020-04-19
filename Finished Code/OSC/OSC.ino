@@ -71,8 +71,17 @@ void loop() {
 
     delay(20);
   Serial.println(btn1_val);
+  Serial.println(btn2_val);
+  
   Serial.print("slider 1: ");
   Serial.println(slide1_val);
+   Serial.print("slider 2: ");
+  Serial.println(slide2_val);
+   Serial.print("slider 3: ");
+  Serial.println(slide3_val);
+   Serial.print("slider 4: ");
+  Serial.println(slide4_val);
+  
   //Serial.println("slider 2: " + slide2_val);
   //Serial.println("slider 3: " + slide3_val);
   //Serial.println("slider 4: " + slide4_val);

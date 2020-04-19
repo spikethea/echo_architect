@@ -161,7 +161,7 @@ class MainMenu extends Component {
 swapData() {
 let {database} = this.state
 
-    console.log(dateFormat((new Date(database[0].timestamp)), "shortDate"));
+
     let swappedsong = [
         {
             name:"Trap Muzik",

@@ -48,6 +48,7 @@ export default class Sketchp5 extends Component {
     this.xSize = 0;
     this.ySize = 0;
     this.timebtn1 = 0;
+    this.timebtn2 = 0;
     this.btn1 = 0;
     this.btn2 = 0;
     this.width = window.innerWidth;
@@ -401,8 +402,17 @@ export default class Sketchp5 extends Component {
       }
       
 
-      this.btn2 = value[5];
-
+      if (value[5] === 1) {
+        //timebtn1= 0
+        this.timebtn2++
+        console.log(this.timebtn2)
+      } else if (value[5] === 0)
+       {this.timebtn2 = 0;}
+      
+      if (this.timebtn2 === 10) {
+        this.btn2 = value[5];
+      }
+      
       this.current = [this.x, this.y, this.x1, this.y1];
       console.log(this.current);
       console.log(this.btn1, this.btn2);
