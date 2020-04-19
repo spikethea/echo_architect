@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Rockwell';
-  src: local('RockWell'), url(./fonts/Rockwell.otf) format('otf');
+  src: local('Rockwell'), url(./fonts/Rockwell.otf) format('otf');
 }
 body {
   background-color: #00020B;
@@ -22,12 +22,12 @@ body {
 
 .echo-architect {
   position: absolute;
-  font-size: 5.5em;
-  top: 33%;
-  left:20%;
-  font-family: Rockwell;
-  color: #046FB7;
-  
+  font-size: 7.5em;
+  top: 20%;
+  left:25%;
+  font-family: "Rockwell";
+  color: rgb(66, 179, 255);
+  text-shadow: 0 0 1px rgb(66, 179, 255);
   opacity: 1;
 }
 
@@ -46,8 +46,8 @@ body {
   opacity: 0;
   height: 10vmin;
   pointer-events: none;
-  top:40%;
-  left: 55%;
+  top:50%;
+  left: 42%;
   animation: App-logo-spin 3s infinite linear;
 }
 
@@ -76,10 +76,25 @@ body {
 }
 
 .render-button {
-  z-index: 1;
-  top:80%;
-
+  width: 100%;
+  height: 100%;
+  z-index: 6;
 }
+
+.click-anywhere {
+  z-index: 1;
+  top:70%;
+  font-size: 1.5em;
+  color: #c1e6ff;
+  text-shadow: 0 0 5px rgba(0, 153, 255, 0.486);
+  letter-spacing: 0.3em;
+  font-family: Arial, Helvetica, sans-serif;
+  display: inline-block;  
+  position: absolute;
+  left: 37%;
+  font-stretch:expanded; 
+}
+
 
 .p5-button {
   z-index: 1;
@@ -88,13 +103,24 @@ body {
 }
 
 .notif-button {
+  
+  padding: 1em;
   z-index: 1;
-  display: inline;
   position: absolute;
   top: 5%;
   left: 5%;
-  background-color: #282c34;
-  color: #046FB7;
-  
+  background-color: rgb(2, 43, 70);
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  box-shadow: 5px 10px #046FB7;
+  text-shadow: 0 0 5px rgb(8, 141, 230);
 
+}
+
+.list-item {
+  font-family: "Rockwell";
+  font-size: 1em;
+  margin: 0;
+  letter-spacing: 0.0625em;
 }

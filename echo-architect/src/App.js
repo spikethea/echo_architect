@@ -20,7 +20,7 @@ class App extends Component {// Condiitional Rendering
   
   isMenuDisplayed () {
         if (!this.state.menuDisplayed) {
-           return (<div><Logo/><h1 style={{zIndex:6}} className="echo-architect">Echo Architect</h1><button className="render-button" onClick={() =>{this.setState({menuDisplayed:true})}}>Display Menu</button></div>)} 
+           return (<div onClick={() =>{this.setState({menuDisplayed:true})}} className="render-button" ><Logo/><h1 style={{zIndex:6}} className="echo-architect">Echo Architect</h1><div onClick={() =>{this.setState({menuDisplayed:true})}} className="render-button"></div><p className="click-anywhere">click here to start</p></div>)} 
            else return <div>
              <MainMenu/>
              

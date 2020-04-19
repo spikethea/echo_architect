@@ -3,7 +3,7 @@
     margin: 1rem;
     display: grid;
     float:right;
-    width: 35%;
+    width: 40%;
 }
 
 @keyframes example {
@@ -21,13 +21,14 @@ to {top: 20px;}
     left: 0em;
     float: right;
     text-align: center;
-    background-color: white;
+    background-color: #315a9857;
     line-height: 1.5rem;
     animation-duration: 4s;
+    color: white;
     font-size:1rem;
     margin: 1em;
-    width: 90%;
     border-radius: 0.5rem;
+    
 }
 
 .sidemenu-body { 
@@ -55,7 +56,7 @@ margin: 1em;
   top: 45px;
   width: 90%;
   max-height: 200px;
-  background-color: white;
+  background-color: #315a9857;
   transition: all 400ms;
   }
   /* This fires as soon as the this.state.showList is false */
@@ -63,7 +64,7 @@ margin: 1em;
   top: 45px;
   width: 90%;
   max-height: 200px;
-  background-color: White;
+  background-color: rgb(8, 34, 107);
   }
   /* fires as element leaves the DOM*/
   .list-transition-exit-active {
