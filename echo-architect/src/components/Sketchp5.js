@@ -59,9 +59,10 @@ export default class Sketchp5 extends Component {
     this.data = [];
 
     this.gameState = 2; //0 = ready, 1 = create new, 2 = retrieve new code, 3 waiting for new code, 4 = playing current, 5 = playing target
-    this.original = [0, 0, 0, 0]; //[beat,melody,ambient,tempo]
-    this.current = [4, 4, 4, 4]; //what the user changes
+    this.original = [9, 9, 9, 9]; //[beat,melody,ambient,tempo]
+    this.current = [0, 0, 0, 0]; //what the user changes
     this.fft = new p5sound.FFT();
+    this.gameWon = false
     
 
     
@@ -133,9 +134,9 @@ export default class Sketchp5 extends Component {
 
     p5.beginShape();
     if (this.gameState === 4)
-     p5.stroke(255,0,0,10);
+     p5.stroke(0,255,0,10);
     else if (this.gameState === 5)
-    p5.stroke(0,255,0,10);
+    p5.stroke(255,0,0,10);
      else if (this.gameState === 0)
     p5.stroke(255,255,255,10);
 
@@ -149,9 +150,9 @@ export default class Sketchp5 extends Component {
 
     p5.beginShape();
     if (this.gameState === 4)
-     p5.stroke(255,0,0,5);
-    else if (this.gameState === 5)
      p5.stroke(0,255,0,5);
+    else if (this.gameState === 5)
+     p5.stroke(255,255,0,5);
     else if (this.gameState === 0)
      p5.stroke(255,255,255,5);
      
@@ -168,7 +169,7 @@ export default class Sketchp5 extends Component {
     p5.fill(255,255,0);
   }
 
-  async recieveDatabase(original, beat, melody, ambience, p5) {
+  async recieveDatabase(beat, melody, ambience, p5) {
     try {
       // console.log("game state: " + gameState);
       this.gameState = 3;
@@ -177,12 +178,13 @@ export default class Sketchp5 extends Component {
       const data = await response.json(); //await the response in json form
       this.database = data;
       console.log(data);
-      let randomer = Math.floor(Math.random() * this.database.length);
-      original = this.database[this.props.songchoice].current;
-      console.log(original)
-      beat[original[0]].rate(original[3]);
-      melody[original[1]].rate(original[3]);
+      //let randomer = Math.floor(Math.random() * this.database.length);
+      this.original = this.database[this.props.songchoice].current;
+      console.log(this.original)
+      beat[this.original[0]].rate(this.original[3]);
+      melody[this.original[1]].rate(this.original[3]);
       this.gameState = 0;
+      
       //console.log("how many times");
       return this.database;
     } catch (err) {
@@ -207,8 +209,28 @@ export default class Sketchp5 extends Component {
         // beat.setVolume = 0.1;
         // melody.setVolume = 0.1;
         // ambience.setVolume = 0.1;
+
+        
+        let panning = p5.map (current[2],0,9,-1,1);
+
+        let volumeDist = ((9-p5.dist(original[2], 0, current[2], 0) )/9);
+
+        let volumeMap = p5.map(volumeDist,0, 1 , 0.01, 1)
+        
+        console.log(volumeMap);
+
+        beat[current[0]].pan(panning);
+        melody[current[1]].pan(panning);
+
+        beat[current[0]].setVolume(volumeMap);
+        melody[current[1]].setVolume(volumeMap);
+        
         beat[current[0]].rate(1+(p5.int(current[3])-4)/8);
         melody[current[1]].rate(1+(p5.int(current[3])-4)/8);
+        console.log(p5.int((current[4])/4.5)-1);
+        
+
+
         //beat.currentTime = 0;
         //melody.currentTime = 0;
 
@@ -223,12 +245,13 @@ export default class Sketchp5 extends Component {
         // console.log("working")
         
         //run the check here to see if they match up, play animation of somesort??
-        this.checking(original, current, this.gameState);
+        this.checking(this.original, this.current, this.gameState);
       }
           this.btn1 = 0;
   }
 
   async sendData(current) {
+    this.gameWon = false;
     const data = { current }; //store the buildings the user selected and the url for reference, alongside the day they were currently viewing
     const options = {
       method: "POST",
@@ -241,11 +264,12 @@ export default class Sketchp5 extends Component {
     const response = await fetch(`http://localhost:${port}/api/`, options); //await /api fetch connection
     const json = await response.json(); //check it's sent and console.log the response.
     console.log(json);
+
   }
 
   originalAudio(beat, melody, ambience, beatOrg, melodyOrg, ambienceOrg, current, original, database, p5) {
     
-
+    console.log(original)
     
     if (this.gameState === 0) {
       /*
@@ -264,14 +288,19 @@ export default class Sketchp5 extends Component {
       */
      this.gameState = 5;
       //initialise
-      beat[original[0]].volume = 0.1;
-      melody[original[0]].volume = 0.1;
+      beat[original[0]].volume = 1;
+      melody[original[0]].volume = 1;
       //beat.currentTime = 0;
       //melody.currentTime = 0;
       if (!beat[original[0]].isPlaying() && !melody[original[0]].isPlaying()) {
 
+        let panning = p5.map (original[2],0,9,-1,1);
+
         beat[original[0]].rate(1+(p5.int(original[3])-4)/8);
         melody[original[1]].rate(1+(p5.int(original[3])-4)/8);
+
+        beat[original[0]].pan(panning);
+        melody[original[1]].pan(panning);
 
         beat[original[0]].loop();
         melody[original[1]].loop();
@@ -279,7 +308,15 @@ export default class Sketchp5 extends Component {
       }     
       
     } 
-    else if (this.gameState === 1) {
+    else if (this.gameState === 5) {
+      beat[original[0]].stop();
+      melody[original[1]].stop();
+      this.gameState = 0;
+    }
+    this.btn2 = 0;
+
+    if (this.gameWon === true) {
+      console.log("config sent to database")
       this.sendData(current);
       this.gameState = 0;
       let randomer = Math.floor(Math.random() * database.length);
@@ -287,27 +324,29 @@ export default class Sketchp5 extends Component {
       original = database[randomer].current;
       this.btn2 = 1;
     }
-    else if (this.gameState === 5) {
-      beat[original[0]].stop();
-      melody[original[1]].stop();
-      this.gameState = 0;
-    }
-    this.btn2 = 0;
   }
 
 
-  checking(original, current, gameState) {
-    if (
-      original[0] === current[0] &&
-      original[1] === current[1] &&
-      original[2] === current[2] &&
-      original[3] === current[3]
-    ) gameState = 1;
+  checking(gameState) {
+    console.log(this.original);
+    console.log(this.current);
+    if  (
+      this.original[0] === this.current[0] &&
+      this.original[1] === this.current[1] &&
+      this.original[2] === this.current[2] &&
+      this.original[3] === this.current[3]
+    ) {
+    console.log("game won");
+    this.gameWon = true
+    gameState = 1;
+  }
   }
   // console.log(this.x,this.y,this.x1,this.y1);
   // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
     
   draw = p5 => {
+
+    console.log(this.gameState);
     
     p5.background('#00020B');
     this.currentDisplay(p5);
@@ -319,24 +358,25 @@ export default class Sketchp5 extends Component {
     //console.log(this.database);
     //console.log(this.gameState)  
     if (this.beat[9].isLoaded() === true && this.melody[9].isLoaded() === true) {
-      console.log("beat loaded!")
+//      console.log("beat loaded!")
       this.loading = false
     }
    
     if (this.gameState === 2) {
       //console.log("receiving database");
 
-    this.recieveDatabase( this.original, this.beat, this.melody, this.ambience);
+    this.recieveDatabase(this.beat, this.melody, this.ambience);
     //  console.log(this.database);
     }
     this.visualiserLoop(this.spectrum, this.width, this.height, p5);
-    if (this.gameState === 0) {
+    if (this.gameState === 0 && this.gameWon === false) {
       p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width-10,this.height-10);
     }
-    else if (this.gameState === 2) {
+    else if (this.gameState === 2 && this.gameWon === false) {
       p5.text("Please wait, loading blueprints and sounds",10,10,this.width-10,this.height-10);
     }
-    else if (this.gameState === 1) {
+     if (this.gameWon === true) {
+      console.log("you win");
       p5.text("YOU WIN, create your own blueprint and press RED button to submit the combination to our database.",10,10,this.width-10,this.height-10);
     }
 
@@ -393,29 +433,31 @@ export default class Sketchp5 extends Component {
       if (value[4] === 1) {
         //timebtn1= 0
         this.timebtn1++
-        console.log(this.timebtn1)
+//        console.log(this.timebtn1)
       } else if (value[4] === 0)
        {this.timebtn1 = 0;}
       
-      if (this.timebtn1 === 10) {
-        this.btn1 = value[4];
+      if (this.timebtn1 === 115) {
+        this.btn1 = 1;
       }
       
 
       if (value[5] === 1) {
         //timebtn1= 0
         this.timebtn2++
-        console.log(this.timebtn2)
+//        console.log(this.timebtn2)
       } else if (value[5] === 0)
        {this.timebtn2 = 0;}
       
-      if (this.timebtn2 === 10) {
-        this.btn2 = value[5];
+      if (this.timebtn2 === 115) {
+        this.btn2 = 1;
       }
       
       this.current = [this.x, this.y, this.x1, this.y1];
-      console.log(this.current);
-      console.log(this.btn1, this.btn2);
+      //console.log(this.current);
+      //console.log(this.btn1, this.btn2);
+      //console.log(value[4], value[5]);
+      //console.log(this.timebtn1, this.timebtn2);
       
     }
   }
