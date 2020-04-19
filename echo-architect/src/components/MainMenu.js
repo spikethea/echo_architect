@@ -17,7 +17,7 @@ class MainMenu extends Component {
             
             count: 3,
             countdown: false,
-            songchoice: 0,
+            songchoice: 4,
             dataReceived: false,
             
             song: [
@@ -164,95 +164,130 @@ let {database} = this.state
 
     let swappedsong = [
         {
-            name:"Trap Muzik",
-            length:dateFormat((new Date(database[0].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
-            audio: require('./money-trees.mp3'),
+            name:"Drum Starter Kit",
+            length:dateFormat((new Date(database[0].timestamp)), "GMT:dd/mm/yyyy"),
+            desc: "Created by the Development team, this easy musical masterpeice can get anyone going at low difficulty.",
             key:0,
         },
         {
-            name:"Orchestral Competition",
-            length:dateFormat((new Date(database[1].timestamp)), "shortDate"),
-            desc: "Tradition Orchestral Music made for the more challenging blah balh blah. Exquisite",
+            name:"Experimental Beat",
+            length:dateFormat((new Date(database[1].timestamp)), "GMT:dd/mm/yyyy"),
+            desc: "Created by the Development team, this experimental composition is challenging, but a seasoned player could ace it.",
             key:1,
         },
         {
             name:"Lo-Fi Tune",
-            length:dateFormat((new Date(database[2].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database[2].timestamp)), "GMT:dd/mm/yyyy"),
+            desc: "Created by Alex Hopkins, this beat is one of those Lo-Fi Hip-Hop beats to study and relax to",
             key:2,
         },
         {
-            name:"Alternative Vibes",
-            length:dateFormat((new Date(database[3].timestamp)), "shortDate"),
+            name:"Difficulty Level: HARD",
+            length:dateFormat((new Date(database[3].timestamp)), "GMT:dd/mm/yyyy"),
             desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
             key:3,
         },
         {
             name:"Custom ",
-            length:dateFormat((new Date(database[4].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-16).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:4,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[5].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-15).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:5,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[6].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-14).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:6,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[7].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-13).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:7,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[8].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-12).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:8,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[9].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-11).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:9,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[10].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-10).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:10,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[11].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-9).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:11,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[12].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-8).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:12,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[13].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-7).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:13,
         },
         {
             name:"Custom",
-            length:dateFormat((new Date(database[14].timestamp)), "shortDate"),
-            desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
+            length:dateFormat((new Date(database.length-6).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
             key:14,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length-5).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:15,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length-4).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:16,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length-3).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:17,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length-2).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:18,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length-1).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:19,
+        },
+        {
+            name:"Custom",
+            length:dateFormat((new Date(database.length).timestamp), "GMT:dd/mm/yyyy"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:20,
         },
         
     ]
@@ -315,7 +350,10 @@ async recieveDatabase() {
                 
                 return(<div><div className="number">
                 <p  ref={p => this.aboutSection = p}>{this.state.count}</p>
-            </div><Sketchp5 style={{zIndex: -3}} songchoice={this.state.songchoice} /><BackgroundParticles style={{zIndex:3}} />
+            </div>
+            <h1 style={{zIndex:3}} className="echo_architect">Echo Architect</h1>
+            <Sketchp5 style={{zIndex: -3}} songchoice={this.state.songchoice} />
+            <BackgroundParticles style={{zIndex:3}} />
             
             
             

@@ -1,3 +1,7 @@
+@font-face {
+  font-family: 'Rockwell';
+  src: local('RockWell'), url(./fonts/Rockwell.otf) format('otf');
+}
 body {
   background-color: #00020B;
 }
@@ -16,6 +20,17 @@ body {
   z-index:-3
 }
 
+.echo-architect {
+  position: absolute;
+  font-size: 5.5em;
+  top: 33%;
+  left:20%;
+  font-family: Rockwell;
+  color: #046FB7;
+  
+  opacity: 1;
+}
+
 .particles {
   opacity: 25%;
   top: 0em;
@@ -32,7 +47,7 @@ body {
   height: 10vmin;
   pointer-events: none;
   top:40%;
-  left: 45%;
+  left: 55%;
   animation: App-logo-spin 3s infinite linear;
 }
 
@@ -75,6 +90,11 @@ body {
 .notif-button {
   z-index: 1;
   display: inline;
-  position: relative;
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background-color: #282c34;
+  color: #046FB7;
+  
 
 }

@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
+import './fonts/Rockwell.otf';
 import Metronome from './components/Metronome'
 import Notification from './components/Notification'
 import MainMenu from './components/MainMenu'
 import Logo from './components/Logo';
-import Sketchp5 from './components/Sketchp5';
 import BackgroundParticles from './components/BackgroundParticles';
 
 
@@ -21,8 +20,11 @@ class App extends Component {// Condiitional Rendering
   
   isMenuDisplayed () {
         if (!this.state.menuDisplayed) {
-           return (<div><Logo/><button className="render-button" onClick={() =>{this.setState({menuDisplayed:true})}}>Display Menu</button></div>)} 
-           else return <div><MainMenu/></div>
+           return (<div><Logo/><h1 style={{zIndex:6}} className="echo-architect">Echo Architect</h1><button className="render-button" onClick={() =>{this.setState({menuDisplayed:true})}}>Display Menu</button></div>)} 
+           else return <div>
+             <MainMenu/>
+             
+             </div>
     } 
 
 
@@ -36,8 +38,9 @@ class App extends Component {// Condiitional Rendering
     <div className="App">
       <header>
       </header>
+
       <Notification style={{zIndex:2}}/>
-      <Metronome style={{zIndex:1}}/>
+
       {this.isMenuDisplayed()}
       <BackgroundParticles/>
 

@@ -28,9 +28,9 @@ class Notification extends Component {
           appear
         ><div className="sidemenu">
               <ul className="list">
-                <li className="list-item">Rajat</li>
-                <li className="list-item">Writes Posts</li>
-                <li className="list-item">Loves Pizza</li>
+                <li className="list-item">Green: Play Sliders</li>
+                <li className="list-item">Red: Play Original Audio</li>
+                <li className="list-item"></li>
               </ul>
             </div>
             </CSSTransition>

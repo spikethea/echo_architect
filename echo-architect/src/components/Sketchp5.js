@@ -370,14 +370,14 @@ export default class Sketchp5 extends Component {
     }
     this.visualiserLoop(this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0 && this.gameWon === false) {
-      p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width-10,this.height-10);
+      p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width,this.height);
     }
     else if (this.gameState === 2 && this.gameWon === false) {
-      p5.text("Please wait, loading blueprints and sounds",10,10,this.width-10,this.height-10);
+      p5.text("Please wait, loading blueprints and sounds",10,10,this.width,this.height);
     }
      if (this.gameWon === true) {
       console.log("you win");
-      p5.text("YOU WIN, create your own blueprint and press RED button to submit the combination to our database.",10,10,this.width-10,this.height-10);
+      p5.text("YOU WIN, create your own blueprint and press RED button to submit the combination to our database.",10,10,this.width,this.height);
     }
 
     if (this.btn1 === 1) {
@@ -494,6 +494,7 @@ export default class Sketchp5 extends Component {
         p5.rect(i*10,25*j,8,23);
       }
     }
+    p5.fill(0,255,0);
     p5.textSize(20);
     p5.text('Beat',102,0,100,100);
     p5.text('Melody',102,25,100,100);
@@ -509,8 +510,7 @@ export default class Sketchp5 extends Component {
 
    return( 
     <div> 
-      
-      <Sketch setup={this.setup} draw={this.draw} />
+      <Sketch  setup={this.setup} draw={this.draw} />
     </div>);
   }
 

@@ -1,11 +1,15 @@
 {"current":[4,4,4,4],"timestamp":1586788489544,"_id":"42rjBEzPPh4OB4A7"}
 {"current":[1,2,3,4],"timestamp":1582234962748,"_id":"5wC9tGW5fOfbT2OR"}
-{"current":[4,4,4,4],"timestamp":1586785153198,"_id":"AWDSLaoYWhOWyqiQ"}
+{"current":[0,0,7,0],"timestamp":1587314742836,"_id":"7pEv3feRzxX04EOf"}
+{"current":[8,7,6,9],"timestamp":1586785153198,"_id":"AWDSLaoYWhOWyqiQ"}
 {"current":[4,4,4,4],"timestamp":1586712871360,"_id":"BNRs9OXrAfVMwV6l"}
+{"current":[0,9,1,9],"timestamp":1587314742901,"_id":"GmkMd8tFFo3EAW48"}
 {"current":[4,4,4,4],"timestamp":1586785448529,"_id":"IHN8lUivoFGdncmk"}
+{"current":[0,9,1,9],"timestamp":1587314742820,"_id":"NrPfCqsSl4ZBI2Pg"}
 {"current":[4,4,4,4],"timestamp":1586782979542,"_id":"P8MpTvADnhCJxRpO"}
 {"current":[4,4,4,4],"timestamp":1586712697719,"_id":"QHqE8VvTJIU0CpYK"}
 {"current":[4,4,4,4],"timestamp":1586787591405,"_id":"TywT2PSC6kzq9BEv"}
+{"current":[0,9,1,9],"timestamp":1587314742868,"_id":"YxOZQpnzg0iMHsZi"}
 {"current":[4,4,4,4],"timestamp":1586788330134,"_id":"axELAgo5JqL7uoha"}
 {"current":[4,4,4,4],"timestamp":1586788457560,"_id":"bORO0WU53eTx8mjh"}
 {"current":[1,2,3,4],"timestamp":1585075438423,"_id":"cPgmZs74MvoFqlhY"}
@@ -13,8 +17,4 @@
 {"current":[4,4,4,4],"timestamp":1586782879862,"_id":"tJpTyleqe7EPiLSC"}
 {"current":[4,4,4,4],"timestamp":1586782190214,"_id":"uNa1AJ170LoOW3iU"}
 {"current":[4,4,4,4],"timestamp":1586786588475,"_id":"uNa1AJ170LoOp3iU"}
-{"current":[0,9,1,9],"timestamp":1587314742820,"_id":"NrPfCqsSl4ZBI2Pg"}
-{"current":[0,9,1,9],"timestamp":1587314742836,"_id":"7pEv3feRzxX04EOf"}
 {"current":[0,9,1,9],"timestamp":1587314742839,"_id":"wHup82SyKlReHUCt"}
-{"current":[0,9,1,9],"timestamp":1587314742868,"_id":"YxOZQpnzg0iMHsZi"}
-{"current":[0,9,1,9],"timestamp":1587314742901,"_id":"GmkMd8tFFo3EAW48"}
