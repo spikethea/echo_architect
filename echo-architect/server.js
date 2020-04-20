@@ -14,7 +14,6 @@ app.use(express.json({ limit: "1mb" })); //set limits for data
 const database = new Datastore("database.db"); //database for storing my user logged data
 database.loadDatabase(); //load database
 
-if (database.length > 20) {console.log ("too big")}
 
 
 app.all("/api/", (request, response, next) => {
