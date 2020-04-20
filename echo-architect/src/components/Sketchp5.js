@@ -134,6 +134,22 @@ export default class Sketchp5 extends Component {
 
     p5.beginShape();
     if (this.gameState === 4)
+     p5.stroke(0,255,0,18);
+    else if (this.gameState === 5)
+    p5.stroke(255,0,0,18);
+     else if (this.gameState === 0)
+    p5.stroke(255,255,255,18);
+
+    p5.strokeWeight(20);
+    for (let i = 0; i < waveform.length; i++){
+      let x = p5.map(i, 0, waveform.length, 0, width);
+      let y = p5.map( waveform[i], -1, 1, 0, height);
+      p5.vertex(x,y);
+    }
+    p5.endShape();
+
+    p5.beginShape();
+    if (this.gameState === 4)
      p5.stroke(0,255,0,10);
     else if (this.gameState === 5)
     p5.stroke(255,0,0,10);
@@ -166,7 +182,7 @@ export default class Sketchp5 extends Component {
 
     p5.pop();
     p5.stroke(0);
-    p5.fill(255,255,0);
+    p5.fill(240,240,255);
   }
 
   async recieveDatabase(beat, melody, ambience, p5) {
@@ -370,14 +386,14 @@ export default class Sketchp5 extends Component {
     }
     this.visualiserLoop(this.spectrum, this.width, this.height, p5);
     if (this.gameState === 0 && this.gameWon === false) {
-      p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",10,10,this.width,this.height);
+      p5.text("Try to match the music that plays when you press the GREEN button to the music that plays from RED button by using sliders",this.width*(1/18),this.height*(2/4)-25,this.width,this.height);
     }
     else if (this.gameState === 2 && this.gameWon === false) {
-      p5.text("Please wait, loading blueprints and sounds",10,10,this.width,this.height);
+      p5.text("Please wait, loading blueprints and sounds",this.width*(1/18),this.height*(2/4)-25,this.width,this.height);
     }
      if (this.gameWon === true) {
       console.log("you win");
-      p5.text("YOU WIN, create your own blueprint and press RED button to submit the combination to our database.",10,10,this.width,this.height);
+      p5.text("YOU WIN, create your own blueprint and press RED button to submit the combination to our database.",this.width*(1/18),this.height*(2/4)-25,this.width,this.height);
     }
 
     if (this.btn1 === 1) {
