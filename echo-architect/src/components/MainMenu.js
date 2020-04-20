@@ -148,9 +148,9 @@ class MainMenu extends Component {
         let localkey = key 
         
 
-        this.setState({songchoice: localkey});
+        this.setState({songchoice: localkey}, () => console.log("state", this.state.songchoice));
 
-        console.log(this.state.songchoice);
+        //console.log(this.state.songchoice);
 
         clearInterval(this.countdownInterval);
         this.setState({count:3, countdown:true, songchoice: key}, 
@@ -322,12 +322,12 @@ async recieveDatabase() {
 
         let {song, database} = this.state;
 
-        console.log(this.state.countdown);
+        //console.log(this.state.countdown);
 
         if (!this.state.countdown ) {
             
 
-            console.log(this.state.countdown);
+            //console.log(this.state.countdown);
             this.recieveDatabase();
             
             return (

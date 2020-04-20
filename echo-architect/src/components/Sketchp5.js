@@ -118,7 +118,7 @@ export default class Sketchp5 extends Component {
 
   visualiserLoop(waveform, width, height, p5) {
     //console.log(this.spectrum);
-    
+    console.log(this.props.songchoice);
     waveform = this.fft.waveform();
     p5.push();
     p5.noFill();

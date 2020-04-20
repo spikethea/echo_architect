@@ -23,8 +23,8 @@ body {
 .echo-architect {
   position: absolute;
   font-size: 7.5em;
-  top: 20%;
-  left:25%;
+  top: 15%;
+  left:29%;
   font-family: "Rockwell";
   color: rgb(66, 179, 255);
   text-shadow: 0 0 1px rgb(66, 179, 255);
@@ -47,7 +47,7 @@ body {
   height: 10vmin;
   pointer-events: none;
   top:50%;
-  left: 42%;
+  left: 47%;
   animation: App-logo-spin 3s infinite linear;
 }
 
@@ -91,7 +91,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   display: inline-block;  
   position: absolute;
-  left: 37%;
+  left: 42%;
   font-stretch:expanded; 
 }
 
