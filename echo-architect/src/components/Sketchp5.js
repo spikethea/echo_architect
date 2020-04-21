@@ -118,7 +118,7 @@ export default class Sketchp5 extends Component {
 
   visualiserLoop(waveform, width, height, p5) {
     //console.log(this.spectrum);
-    console.log(this.props.songchoice);
+    //console.log(this.props.songchoice);
     waveform = this.fft.waveform();
     p5.push();
     p5.noFill();
@@ -318,8 +318,10 @@ export default class Sketchp5 extends Component {
         beat[original[0]].pan(panning);
         melody[original[1]].pan(panning);
 
+        if (this.gameWon === false) {
         beat[original[0]].loop();
         melody[original[1]].loop();
+        }
 
       }     
       
@@ -361,9 +363,10 @@ export default class Sketchp5 extends Component {
   // NOTE: Do not use setState in draw function or in functions that is executed in draw function... pls use normal variables or class properties for this purposes
     
   draw = p5 => {
-
-    console.log(this.gameState);
-    
+    console.log("song choice: " + this.props.songchoice);
+    //console.log(this.gameState);
+    console.log("original" +this.original);
+    console.log("game state: " + this.gameState);
     p5.background('#00020B');
     this.currentDisplay(p5);
     // this.xPos = p5.map(this.x,0,1024,0,500);
@@ -453,7 +456,7 @@ export default class Sketchp5 extends Component {
       } else if (value[4] === 0)
        {this.timebtn1 = 0;}
       
-      if (this.timebtn1 === 115) {
+      if (this.timebtn1 === 7) {
         this.btn1 = 1;
       }
       
@@ -465,15 +468,19 @@ export default class Sketchp5 extends Component {
       } else if (value[5] === 0)
        {this.timebtn2 = 0;}
       
-      if (this.timebtn2 === 115) {
+      if (this.timebtn2 === 7) {
         this.btn2 = 1;
       }
       
-      this.current = [this.x, this.y, this.x1, this.y1];
-      //console.log(this.current);
-      //console.log(this.btn1, this.btn2);
+
+      if (this.gameState === 0|| this.gameWon === true){
+        this.current = [this.x, this.y, this.x1, this.y1];
+      }
+
+      console.log(this.current);
+      console.log(this.btn1, this.btn2);
       //console.log(value[4], value[5]);
-      //console.log(this.timebtn1, this.timebtn2);
+      console.log(this.timebtn1, this.timebtn2);
       
     }
   }
@@ -504,7 +511,7 @@ export default class Sketchp5 extends Component {
     for (let i = 0; i<10; i++) {
       for (let j = 0; j<4; j++) {
         p5.fill(i*10,i*13,i*20);
-        if (this.current[j] == i) {
+        if (this.current[j] === i) {
           p5.fill(0,255,0);
         }
         p5.rect(i*10,25*j,8,23);

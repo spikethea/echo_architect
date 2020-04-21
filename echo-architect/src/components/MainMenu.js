@@ -141,20 +141,24 @@ class MainMenu extends Component {
         }
     }
 
-    buttonPress (key) {
+    buttonPress (id) {
 
-        console.log(key);
+        let {database} = this.state
 
-        let localkey = key 
+        console.log(id);
+
         
 
-        this.setState({songchoice: localkey}, () => console.log("state", this.state.songchoice));
+        this.setState({songchoice: id, count:3, countdown:true}, () => {
+            console.log("state", this.state.songchoice);
+            
+        })
+
 
         //console.log(this.state.songchoice);
 
-        clearInterval(this.countdownInterval);
-        this.setState({count:3, countdown:true, songchoice: key}, 
-            ()=>{setInterval(this.countdownInterval, 3000); this.aboutTween = TweenMax.to(this.aboutSection, .8,{opacity:1, y: -100, ease: Power3.easeOut})});
+        
+            
 
 }
 
@@ -168,126 +172,148 @@ let {database} = this.state
             length:dateFormat((new Date(database[0].timestamp)), "GMT:dd/mm/yyyy"),
             desc: "Created by the Development team, this easy musical masterpeice can get anyone going at low difficulty.",
             key:0,
+            id:0
         },
         {
             name:"Experimental Beat",
             length:dateFormat((new Date(database[1].timestamp)), "GMT:dd/mm/yyyy"),
             desc: "Created by the Development team, this experimental composition is challenging, but a seasoned player could ace it.",
             key:1,
+            id:1
         },
         {
             name:"Lo-Fi Tune",
             length:dateFormat((new Date(database[2].timestamp)), "GMT:dd/mm/yyyy"),
             desc: "Created by Alex Hopkins, this beat is one of those Lo-Fi Hip-Hop beats to study and relax to",
             key:2,
+            id:2,
+
         },
         {
             name:"Difficulty Level: HARD",
             length:dateFormat((new Date(database[3].timestamp)), "GMT:dd/mm/yyyy"),
             desc: "Created in 2006, this musical masterpeice wAS THE START OF THE tRAP mUSIC era.It was the start of the blah blah blah",
             key:3,
+            id:3
         },
         {
             name:"Custom ",
-            length:dateFormat((new Date(database.length-16).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:4,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-15).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:5,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-14).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:6,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-13).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:7,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-12).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:8,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-11).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:9,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-10).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:10,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-9).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:11,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-8).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:12,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-7).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:13,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-6).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:14,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-5).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:15,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-4).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:16,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-3).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:17,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-2).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:18,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length-1).timestamp), "GMT:dd/mm/yyyy"),
-            desc: "A custom configuration, created by a user who completed the game",
-            key:19,
-        },
-        {
-            name:"Custom",
-            length:dateFormat((new Date(database.length).timestamp), "GMT:dd/mm/yyyy"),
+            length:dateFormat(new Date(database[database.length-1].timestamp), "dd/mm/yy HH:MM"),
             desc: "A custom configuration, created by a user who completed the game",
             key:20,
+            id:database.length-1,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-2].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:19,
+            id:database.length-2,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-3].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:18,
+            id:database.length-3,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-4].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:17,
+            id:database.length-4,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-5].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:16,
+            id:database.length-5,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-6].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:15,
+            id:database.length-6,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-7].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:14,
+            id:database.length-7,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-8].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:13,
+            id:database.length-8,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-9].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:12,
+            id:database.length-9,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-10].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:11,
+            id:database.length-10,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-11].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:10,
+            id:database.length-11,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-12].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:9,
+            id:database.length-12,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-13].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:8,
+            id:database.length-13,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-14].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:7,
+            id:database.length-14,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-15].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:6,
+            id:database.length-15,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-16].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:5,
+            id:database.length-16,
+        },
+        {
+            name:"Custom",
+            length:dateFormat(new Date(database[database.length-17].timestamp), "dd/mm/yy HH:MM"),
+            desc: "A custom configuration, created by a user who completed the game",
+            key:4,
+            id:database.length-17,
         },
         
     ]
@@ -334,7 +360,7 @@ async recieveDatabase() {
     <div ref={p => this.MyMenu = p} className="mainmenu">
     <p className="title">Song List</p>
         <div className="songList">
-            {song.map(song => (<div onClick={this.buttonPress.bind(this, song.key)}  key={song.key}  className="song-entry">
+            {song.map(song => (<div onClick={this.buttonPress.bind(this, song.id)}  key={song.key}  className="song-entry">
                 <h3 className="song-name">{song.name}</h3>
                 <p className="song-length">{song.length}</p>
                 <p className="song-desc">{song.desc}</p>
