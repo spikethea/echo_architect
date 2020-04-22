@@ -32,7 +32,7 @@ body {
 }
 
 .particles {
-  opacity: 25%;
+  opacity: 0.4!important;
   top: 0em;
   z-index: 0;
   position: fixed;

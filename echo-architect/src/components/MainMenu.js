@@ -147,7 +147,7 @@ class MainMenu extends Component {
 
         console.log(id);
 
-        
+        console.log(new Date(1587314742839));
 
         this.setState({songchoice: id, count:3, countdown:true}, () => {
             console.log("state", this.state.songchoice);
@@ -198,7 +198,7 @@ let {database} = this.state
         },
         {
             name:"Custom ",
-            length:dateFormat(new Date(database[database.length-1].timestamp), "dd/mm/yy HH:MM"),
+            length:dateFormat(new Date(database[database.length- 1].timestamp), "dd/mm/yy HH:MM"),
             desc: "A custom configuration, created by a user who completed the game",
             key:20,
             id:database.length-1,

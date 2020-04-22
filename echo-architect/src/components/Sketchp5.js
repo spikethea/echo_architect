@@ -365,7 +365,7 @@ export default class Sketchp5 extends Component {
   draw = p5 => {
     console.log("song choice: " + this.props.songchoice);
     //console.log(this.gameState);
-    console.log("original" +this.original);
+    console.log("original" + this.original);
     console.log("game state: " + this.gameState);
     p5.background('#00020B');
     this.currentDisplay(p5);
@@ -456,7 +456,7 @@ export default class Sketchp5 extends Component {
       } else if (value[4] === 0)
        {this.timebtn1 = 0;}
       
-      if (this.timebtn1 === 7) {
+      if (this.timebtn1 === 12) {
         this.btn1 = 1;
       }
       
@@ -468,7 +468,7 @@ export default class Sketchp5 extends Component {
       } else if (value[5] === 0)
        {this.timebtn2 = 0;}
       
-      if (this.timebtn2 === 7) {
+      if (this.timebtn2 === 12) {
         this.btn2 = 1;
       }
       
