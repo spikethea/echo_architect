@@ -1,5 +1,6 @@
 {
   "name": "echo-architect",
+  "homepage":"http://quincegorerodney.panel.uwe.ac.uk/echo-architect",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
